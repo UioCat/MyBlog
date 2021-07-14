@@ -1,5 +1,7 @@
 package com.hanxun.blog.utils;
 
+import com.hanxun.blog.enums.BackEnum;
+
 /**
  * @author uio
  */
@@ -8,7 +10,6 @@ public class BackMessage<T> {
     private Integer code;
     private String message;
     private T info;
-
 
     public BackMessage(BackEnum backEnum){
         this.code=backEnum.getCode();
@@ -24,6 +25,10 @@ public class BackMessage<T> {
     public BackMessage(Integer code,String message){
         this.code = code;
         this.message = message;
+    }
+
+    public static BackMessage success() {
+        return new BackMessage(BackEnum.REQUEST_SUCCESS);
     }
 
     public Integer getCode() {

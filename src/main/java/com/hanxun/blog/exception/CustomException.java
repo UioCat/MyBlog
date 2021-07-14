@@ -1,5 +1,7 @@
 package com.hanxun.blog.exception;
 
+import com.hanxun.blog.enums.BackEnum;
+
 public class CustomException extends RuntimeException {
 
     private Integer code;
