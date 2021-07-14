@@ -1,3 +1,7 @@
+V2 	2021-07-14	在部分接口新增了修改时间字段
+
+V1	2021-07-13	初始化用户界面接口文档
+
 # Blog接口文档
 
 [toc]
@@ -54,6 +58,7 @@
     	"brief":"",
     	"homePage":"https://www.uiofield.top/file/22222/index.png",
     	"gmtTime":"2020-04-22 20:00:00",
+    	"modifyTime":"2020-04-22 20:00:00", // V2新增
     	"label":["Java","SpringBoot"],
     	"articleId":"22222",
     	"totalPageView":99999
@@ -101,6 +106,7 @@
     "comment":[{
       	"observer":"xiaoming",
     		"gmtTime":"2020-04-22 20:00:00",
+				"modifyTime":"2020-04-22 20:00:00", // V2新增
       	"content":"666",
       	"headPortraits":"https://www.uiofield.top/file/2222/head.png"
     	}
@@ -137,7 +143,8 @@
       	"time":"2021",
       	"article":{
           "title":"JVM详解",
-          "gmtTime":"2021-02-30"
+          "gmtTime":"2021-02-30"，
+					"modifyTime":"2020-04-22 20:00:00", // V2新增
         }
     	}
     ]
@@ -264,7 +271,9 @@
 
 
 
+# 后台管理
 
+## Admin登陆
 
 #### URL/GET
 
@@ -274,8 +283,12 @@
 
 #### 发送数据
 
-```
-
+```json
+{
+	"email":"",
+	"password":"",
+  "verificationCode":""
+}
 ```
 
 #### 返回数据
@@ -288,11 +301,7 @@
 }
 ```
 
-
-
-
-
-
+## 上传博客
 
 #### URL/GET
 
