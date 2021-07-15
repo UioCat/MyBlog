@@ -63,6 +63,15 @@ public enum BackEnum {
      */
     REPETITION(7, "数据重复添加"),
 
+    /**
+     * 发送普通邮件成功
+     */
+    SEND_ORDINARY_MAIL_SUCCESSFULLY(8, "发送普通邮件成功"),
+
+    /**
+     * 发送普通邮件失败
+     */
+    SEND_ORDINARY_MAIL_FAIL(9, "发送普通邮件失败"),
 
     ;
 
