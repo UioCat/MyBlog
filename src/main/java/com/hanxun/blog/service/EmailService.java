@@ -1,15 +1,8 @@
 package com.hanxun.blog.service;
 
 import com.hanxun.blog.entity.ToEmail;
-import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.utils.BackMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 
 /**
  * @author Alfred
@@ -20,8 +13,19 @@ import org.springframework.stereotype.Service;
 public interface EmailService {
 
 
+    /**
+     * 发送普通邮件
+     * @param toEmail
+     * @return
+     */
     public BackMessage commonEmail(ToEmail toEmail);
 
-    public String test();
+    /**
+     * 发送验证码
+     * @param email
+     * @return
+     */
+    public String sendCode(String email);
+
 
 }
