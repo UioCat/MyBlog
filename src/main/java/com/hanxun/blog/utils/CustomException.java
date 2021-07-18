@@ -58,7 +58,7 @@ public class CustomException extends RuntimeException implements Serializable {
 
     public CustomException(String errorMsg) {
         super(errorMsg);
-        this.errorCode = BackEnum.UNKNOW_ERROR.getCode();
+        this.errorCode = BackEnum.UNKNOWN_ERROR.getCode();
         this.errorMsg = errorMsg;
     }
 

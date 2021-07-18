@@ -1,6 +1,6 @@
 package com.hanxun.blog.service.impl;
 
-import com.hanxun.blog.entity.ToEmail;
+import com.hanxun.blog.dto.ToEmail;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.utils.BackMessage;
