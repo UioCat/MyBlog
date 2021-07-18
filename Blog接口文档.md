@@ -1,6 +1,10 @@
+
+
+V3	 2020-07-18    修改了部分接口的字段，新增点赞功能
+
 V2 	2021-07-14	在部分接口新增了修改时间字段
 
-V1	2021-07-13	初始化用户界面接口文档
+V1	2021-07-13	 初始化用户界面接口文档
 
 # Blog接口文档
 
@@ -57,8 +61,8 @@ V1	2021-07-13	初始化用户界面接口文档
     	"articleTitle":"",
     	"brief":"",
     	"homePage":"https://www.uiofield.top/file/22222/index.png",
-    	"gmtTime":"2020-04-22 20:00:00",
-    	"modifyTime":"2020-04-22 20:00:00", // V2新增
+    	"gmtCreate":"2020-04-22 20:00:00",	// V3修改字段名
+    	"gmtModified":"2020-04-22 20:00:00", // V2新增，V3修改字段名
     	"label":["Java","SpringBoot"],
     	"articleId":"22222",
     	"totalPageView":99999
@@ -100,13 +104,13 @@ V1	2021-07-13	初始化用户界面接口文档
   "info":{
     "author":"",
     "gmtTime":"2020-04-22 20:00:00",
-    "browerTimes":5000,
+    "browseTimes":5000,	// V3修改字段名 
     "title":"深入理解Java",
     "content":"",
     "comment":[{
       	"observer":"xiaoming",
-    		"gmtTime":"2020-04-22 20:00:00",
-				"modifyTime":"2020-04-22 20:00:00", // V2新增
+    		"gmtCreate":"2020-04-22 20:00:00",	// V3修改字段名
+	    	"gmtModified":"2020-04-22 20:00:00", // V2新增，V3修改字段名
       	"content":"666",
       	"headPortraits":"https://www.uiofield.top/file/2222/head.png"
     	}
@@ -143,8 +147,8 @@ V1	2021-07-13	初始化用户界面接口文档
       	"time":"2021",
       	"article":{
           "title":"JVM详解",
-          "gmtTime":"2021-02-30"，
-					"modifyTime":"2020-04-22 20:00:00", // V2新增
+          "gmtCreate":"2020-04-22 20:00:00",	// V3修改字段名
+		    	"gmtModified":"2020-04-22 20:00:00", // V2新增，V3修改字段名
         }
     	}
     ]

@@ -52,7 +52,20 @@ public class Article {
      */
     private Long browseTimes;
 
+    /**
+     * 点赞数
+     */
+    private Long starCount;
+
     public Article() {
+    }
+
+    public Long getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(Long starCount) {
+        this.starCount = starCount;
     }
 
     public Long getId() {
