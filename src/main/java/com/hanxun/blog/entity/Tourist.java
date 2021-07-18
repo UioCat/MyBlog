@@ -22,7 +22,20 @@ public class Tourist {
      */
     private String password;
 
+    /**
+     * 头像图片
+     */
+    private String headPortraits;
+
     public Tourist() {
+    }
+
+    public String getHeadPortraits() {
+        return headPortraits;
+    }
+
+    public void setHeadPortraits(String headPortraits) {
+        this.headPortraits = headPortraits;
     }
 
     public Long getId() {
