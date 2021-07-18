@@ -107,6 +107,8 @@ V1	2021-07-13	 初始化用户界面接口文档
     "browseTimes":5000,	// V3修改字段名 
     "title":"深入理解Java",
     "content":"",
+    "starCount":111, 	// V3新增字段，表示点赞数量
+    "starBySelf":true,	// V3新增，表示该用户是否已经点赞过了，未登录则默认为false
     "comment":[{
       	"observer":"xiaoming",
     		"gmtCreate":"2020-04-22 20:00:00",	// V3修改字段名
@@ -223,8 +225,8 @@ V1	2021-07-13	 初始化用户界面接口文档
 	"username":"",
   "email":"",
   "password":"",
-  "invitationCode":"",
-  "verificationCode":""
+  "invitationCode":"",	// 游客注册邀请码
+  "verificationCode":""	// 邮箱验证码
 }
 ```
 
@@ -272,6 +274,36 @@ V1	2021-07-13	 初始化用户界面接口文档
   "info":
 }
 ```
+
+## 访客点赞
+
+#### URL/GET
+
+```
+
+```
+
+#### 发送数据
+
+```
+
+```
+
+#### 返回数据
+
+```json
+{
+  "code":"200",
+  "message":"请求成功",
+  "info":
+}
+```
+
+
+
+
+
+
 
 
 
