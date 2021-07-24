@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /myBlog
+
+spring:
+  mvc:
+    static-path-pattern: /static/** #遇到任何路径都去/static/下找
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.31.100:3306/?cuseUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:/mapper/*.xml
