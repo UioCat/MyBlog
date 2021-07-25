@@ -13,12 +13,12 @@ public interface LoginService {
      * @param code
      * @return
      */
-    public Boolean register(String email,String password, String code);
+    Boolean register(String email,String password, String code);
 
     /**
      * 游客登录
      * @param tourist
      * @return
      */
-    public String login(Tourist tourist);
+    String login(Tourist tourist);
 }

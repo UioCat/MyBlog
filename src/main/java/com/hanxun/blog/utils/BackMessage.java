@@ -27,13 +27,12 @@ public class BackMessage<T> {
         this.message = message;
     }
 
-    public BackMessage(String message){
-        this.code = 200;
-        this.message = message;
-    }
-
     public static BackMessage success() {
         return new BackMessage(BackEnum.REQUEST_SUCCESS);
+    }
+
+    public static BackMessage success(String message) {
+        return new BackMessage<>(BackEnum.REQUEST_SUCCESS, message);
     }
 
     public static BackMessage error(){

@@ -1,5 +1,6 @@
 package com.hanxun.blog.service.impl;
 
+import com.hanxun.blog.config.BlogConstant;
 import com.hanxun.blog.dto.ToEmail;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.EmailService;
@@ -71,8 +72,7 @@ public class EmailServiceImpl implements EmailService {
         //进入发送逻辑的时候生成随机验证码，六位数字
         String sale = SendUtil.getRandomCode(6);
 
-        String regex = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
-        Pattern p = Pattern.compile(regex);
+        Pattern p = Pattern.compile(BlogConstant.regex);
         Matcher m = p.matcher(email);
         boolean isMatch = m.matches();
         if (!isMatch) {
@@ -100,7 +100,6 @@ public class EmailServiceImpl implements EmailService {
             String[] tos = {email};
             toEmail.setTos(tos);
             commonEmail(toEmail);
-
         }
 
         return true;

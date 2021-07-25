@@ -18,14 +18,14 @@ public interface EmailService {
      * @param toEmail
      * @return
      */
-    public void commonEmail(ToEmail toEmail);
+    void commonEmail(ToEmail toEmail);
 
     /**
      * 发送验证码
      * @param email
      * @return
      */
-    public Boolean sendCode(String email);
+    Boolean sendCode(String email);
 
 
 }

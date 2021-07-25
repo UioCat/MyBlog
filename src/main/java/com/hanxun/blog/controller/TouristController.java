@@ -6,8 +6,6 @@ import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.service.LoginService;
 import com.hanxun.blog.utils.BackMessage;
-import com.hanxun.blog.utils.JWTUtil;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +31,7 @@ public class TouristController {
     @PostMapping("/login")
     public BackMessage login(@RequestBody Tourist tourist) {
         String token = loginService.login(tourist);
-        return new BackMessage(token);
+        return BackMessage.success(token);
     }
 
 
@@ -54,6 +52,7 @@ public class TouristController {
      * 发送注册验证码
      * @return
      */
+    @GetMapping("/sendCode")
     public BackMessage sendCode(String email) {
         if (!emailService.sendCode(email)) {
             throw new CustomException(BackEnum.SEND_CODE_FAIL);
@@ -79,6 +78,6 @@ public class TouristController {
 
     @GetMapping("/loginSuccess")
     public BackMessage loginSuccess(){
-        return new BackMessage("你已经登陆");
+        return BackMessage.success("你已经登陆");
     }
 }
