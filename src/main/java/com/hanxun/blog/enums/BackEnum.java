@@ -73,6 +73,25 @@ public enum BackEnum {
      */
     SEND_ORDINARY_MAIL_FAIL(9, "发送普通邮件失败"),
 
+    /**
+     * 发送验证码失败
+     */
+    SEND_CODE_FAIL(10,"发送验证码失败"),
+
+    /**
+     * 验证码不存在或已过期
+     */
+    THE_VERIFICATION_CODE_DOES_NOT_EXIST_OR_HAS_EXPIRED(11, "验证码不存在或已过期"),
+
+    /**
+     * 验证码错误
+     */
+    VERIFICATION_CODE_ERROR(12, "验证码错误"),
+
+    /**
+     * 登录失败
+     */
+    LOGIN_FAIL(13, "登录失败！账号或者密码不对！")
     ;
 
 

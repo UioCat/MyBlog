@@ -4,7 +4,7 @@ import com.hanxun.blog.dto.ToEmail;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.utils.BackMessage;
-import com.hanxun.blog.utils.CustomException;
+import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.utils.SendUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +24,11 @@ import java.util.regex.Pattern;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
-    private String from;
+//    @Value("${spring.mail.username}")
+//    private String from;
 
     private final static Logger logger = LoggerFactory.getLogger(SendUtil.class);
 
@@ -41,11 +41,11 @@ public class EmailServiceImpl implements EmailService {
      * @return
      */
     @Override
-    public BackMessage commonEmail(ToEmail toEmail) {
+    public void commonEmail(ToEmail toEmail) {
         //创建简单邮件消息
         SimpleMailMessage message = new SimpleMailMessage();
-        //谁发的
-        message.setFrom(from);
+//        //谁发的
+//        message.setFrom(from);
         //谁要接收
         message.setTo(toEmail.getTos());
         //邮件标题
@@ -53,11 +53,11 @@ public class EmailServiceImpl implements EmailService {
         //邮件内容
         message.setText(toEmail.getContent());
         try {
-            mailSender.send(message);
-            return new BackMessage(BackEnum.SEND_ORDINARY_MAIL_SUCCESSFULLY);
+//            mailSender.send(message);
+            throw new CustomException(BackEnum.SEND_ORDINARY_MAIL_SUCCESSFULLY);
         } catch (MailException e) {
             e.printStackTrace();
-            return new BackMessage(BackEnum.SEND_ORDINARY_MAIL_FAIL);
+            throw new CustomException(BackEnum.SEND_ORDINARY_MAIL_FAIL);
         }
     }
 
@@ -67,7 +67,7 @@ public class EmailServiceImpl implements EmailService {
      * @return
      */
     @Override
-    public String sendCode(String email) {
+    public Boolean sendCode(String email) {
         //进入发送逻辑的时候生成随机验证码，六位数字
         String sale = SendUtil.getRandomCode(6);
 
@@ -93,9 +93,17 @@ public class EmailServiceImpl implements EmailService {
                 redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , 300 , TimeUnit.SECONDS);
             }
 
+            //发送验证码
+            ToEmail toEmail = new ToEmail();
+            toEmail.setSubject("注册验证码");
+            toEmail.setContent("您的验证码是: " + sale);
+            String[] tos = {email};
+            toEmail.setTos(tos);
+            commonEmail(toEmail);
+
         }
 
-        return sale;
+        return true;
     }
 
 }

@@ -27,8 +27,17 @@ public class BackMessage<T> {
         this.message = message;
     }
 
+    public BackMessage(String message){
+        this.code = 200;
+        this.message = message;
+    }
+
     public static BackMessage success() {
         return new BackMessage(BackEnum.REQUEST_SUCCESS);
+    }
+
+    public static BackMessage error(){
+        return new BackMessage(BackEnum.UNKNOWN_ERROR);
     }
 
     public Integer getCode() {

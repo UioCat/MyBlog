@@ -30,7 +30,7 @@ public class ExceptionHandle {
         if(e instanceof CustomException) {
             CustomException customException = (CustomException) e;
             logger.warn("自定义异常捕获:{}",customException.getMessage());
-            return new BackMessage(customException.getCode(),customException.getMessage());
+            return new BackMessage(customException.getErrorCode(),customException.getErrorMsg());
         } else if(e instanceof HttpRequestMethodNotSupportedException) {
             logger.warn("捕捉浏览器错误请求异常");
             return new BackMessage(BackEnum.REQUEST_METHOD_ERROR);

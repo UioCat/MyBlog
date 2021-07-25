@@ -1,7 +1,9 @@
 package com.hanxun.blog.config;
 
+import com.hanxun.blog.Interceptor.JWTInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,8 +23,16 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry){
             //registry.addResourceHandler("/static/head_picture/*").addResourceLocations("classpath:/static/head_picture/");
             //registry.addResourceHandler("/static/models/**").addResourceLocations("classpath:/static/models/");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new JWTInterceptor())
+                //拦截的路径
+                .addPathPatterns("/**")
+                //排除登录接口
+                .excludePathPatterns("/tourist/login","/tourist/register");
+    }
 
 
-
-}
 }

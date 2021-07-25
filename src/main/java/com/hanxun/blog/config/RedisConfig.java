@@ -1,6 +1,7 @@
 package com.hanxun.blog.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @time 2021/7/16 15:57
  */
 
+@Configuration
 public class RedisConfig {
 
     //配置序列化器

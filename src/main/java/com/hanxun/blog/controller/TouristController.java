@@ -1,9 +1,15 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.entity.Tourist;
+import com.hanxun.blog.enums.BackEnum;
+import com.hanxun.blog.exception.CustomException;
+import com.hanxun.blog.service.EmailService;
+import com.hanxun.blog.service.LoginService;
 import com.hanxun.blog.utils.BackMessage;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.hanxun.blog.utils.JWTUtil;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author han xun
@@ -14,13 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("tourist")
 public class TouristController {
 
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private LoginService loginService;
+
     /**
      * 游客登陆
      * @return
      */
     @PostMapping("/login")
-    public BackMessage login() {
-        return null;
+    public BackMessage login(@RequestBody Tourist tourist) {
+        String token = loginService.login(tourist);
+        return new BackMessage(token);
     }
 
 
@@ -28,8 +41,24 @@ public class TouristController {
      * 游客注册
      * @return
      */
-    public BackMessage register() {
-        return null;
+    @GetMapping("/register")
+    public BackMessage register(@RequestParam("email") String email,@RequestParam("password") String password,
+                                @RequestParam("code") String code) {
+        if (loginService.register(email,password,code)) {
+            return BackMessage.success();
+        }
+        return BackMessage.error();
+    }
+
+    /**
+     * 发送注册验证码
+     * @return
+     */
+    public BackMessage sendCode(String email) {
+        if (!emailService.sendCode(email)) {
+            throw new CustomException(BackEnum.SEND_CODE_FAIL);
+        }
+        return BackMessage.success();
     }
 
     /**
@@ -46,5 +75,10 @@ public class TouristController {
      */
     public BackMessage star() {
         return null;
+    }
+
+    @GetMapping("/loginSuccess")
+    public BackMessage loginSuccess(){
+        return new BackMessage("你已经登陆");
     }
 }
