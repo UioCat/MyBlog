@@ -1,5 +1,7 @@
 package com.hanxun.blog.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -7,6 +9,7 @@ import java.util.Date;
  * Date 2021/7/18 23:16
  * Description: 评论
  */
+@Data
 public class Comment {
 
     /**
@@ -43,63 +46,4 @@ public class Comment {
      * 博客id
      */
     private Long blogId;
-
-    public Comment() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
-    public Byte getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Byte isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Long getBlogId() {
-        return blogId;
-    }
-
-    public void setBlogId(Long blogId) {
-        this.blogId = blogId;
-    }
 }

@@ -1,10 +1,13 @@
 package com.hanxun.blog.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
  * 博客文章实体类
  */
+@Data
 public class Article {
 
     /**
@@ -56,87 +59,4 @@ public class Article {
      * 点赞数
      */
     private Long starCount;
-
-    public Article() {
-    }
-
-    public Long getStarCount() {
-        return starCount;
-    }
-
-    public void setStarCount(Long starCount) {
-        this.starCount = starCount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
-    public Byte getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Byte isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public String getArticleName() {
-        return articleName;
-    }
-
-    public void setArticleName(String articleName) {
-        this.articleName = articleName;
-    }
-
-    public String getLabelArrays() {
-        return labelArrays;
-    }
-
-    public void setLabelArrays(String labelArrays) {
-        this.labelArrays = labelArrays;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Long getBrowseTimes() {
-        return browseTimes;
-    }
-
-    public void setBrowseTimes(Long browseTimes) {
-        this.browseTimes = browseTimes;
-    }
 }

@@ -1,10 +1,13 @@
 package com.hanxun.blog.entity;
 
+import lombok.Data;
+
 /**
  * @author han xun
  * Date 2021/7/18 22:57
  * Description: 博客全局数据存储，配置
  */
+@Data
 public class Blog {
 
     /**
@@ -26,6 +29,4 @@ public class Blog {
      * 博主密码
      */
     private String password;
-
-
 }
