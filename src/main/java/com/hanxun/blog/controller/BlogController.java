@@ -1,7 +1,12 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.entity.Article;
+import com.hanxun.blog.service.BlogService;
 import com.hanxun.blog.utils.BackMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class BlogController {
+
+    @Autowired
+    private BlogService blogService;
 
     @GetMapping("/getIndex")
     public BackMessage getIndex() {
@@ -25,5 +33,14 @@ public class BlogController {
     @GetMapping("/getLinks")
     public BackMessage getLinks() {
         return null;
+    }
+
+    @PostMapping("/addArticle")
+    public BackMessage addArticle(@RequestBody Article article){
+        int row = blogService.addArticle(article);
+        if (row > 0) {
+            return BackMessage.success();
+        }
+        return BackMessage.error();
     }
 }

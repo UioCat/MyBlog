@@ -1,62 +1,58 @@
 package com.hanxun.blog.entity;
 
-import lombok.Data;
-
+import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
 /**
- * 博客文章实体类
+ * article
+ * @author 
  */
 @Data
-public class Article {
+@TableName(value = "article")
+public class Article implements Serializable {
+    /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
-     * id 主键
+     * 标题
      */
-    private Long id;
+    private String articleTitle;
+
+    /**
+     * 内容
+     */
+    private String content;
+
+    /**
+     * 作者id
+     */
+    private Long authorId;
 
     /**
      * 创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date gmtModified;
 
     /**
-     * 是否删除
+     * 删除标记
      */
-    private Byte isDelete;
+    private Boolean deleteFlag;
 
-    /**
-     * 文章名
-     */
-    private String articleName;
-
-    /**
-     * label数组 使用,分割，最多两个
-     */
-    private String labelArrays;
-
-    /**
-     * 文章内容
-     */
-    private String content;
-
-    /**
-     * 作者
-     */
-    private String author;
-
-    /**
-     * 浏览次数
-     */
-    private Long browseTimes;
-
-    /**
-     * 点赞数
-     */
-    private Long starCount;
+    private static final long serialVersionUID = 1L;
 }
