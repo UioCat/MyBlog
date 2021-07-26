@@ -83,19 +83,21 @@ public class EmailServiceImpl implements EmailService {
             if (redisTemplate.hasKey(email)) {
                 //判断发送间隔是否小于一分钟
                 String oldTime = redisTemplate.opsForValue().get(email).substring(6);
-                if ((System.currentTimeMillis() / 1000 - Long.parseLong(oldTime)) < 60) {
+                if ((System.currentTimeMillis() / 1000 - Long.parseLong(oldTime)) < BlogConstant.mailIntervalTime) {
                     throw new CustomException("间隔时间小于一分钟");
                 }
                 //刷新key
-                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , 300 , TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) ,  BlogConstant.mailValidTime, TimeUnit.SECONDS);
             } else {
                 //新建key
-                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , 300 , TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , BlogConstant.mailValidTime , TimeUnit.SECONDS);
             }
 
             //发送验证码
             ToEmail toEmail = new ToEmail();
-            toEmail.setSubject("注册验证码");
+            toEmail.setSubject(BlogConstant.mailSubject);
+
+            // todo mail content use velocity template
             toEmail.setContent("您的验证码是: " + sale);
             String[] tos = {email};
             toEmail.setTos(tos);

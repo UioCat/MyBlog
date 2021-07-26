@@ -12,4 +12,20 @@ public interface BlogConstant {
      */
     String regex = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
 
+    /**
+     * 发送邮件间隔时间
+     */
+    Integer mailIntervalTime = 60;
+
+    /**
+     * 发送邮件有效时间
+     */
+    Integer mailValidTime = 60 * 5;
+
+    /**
+     * 验证码发送主题
+     */
+    String mailSubject = "注册验证码";
+
+
 }

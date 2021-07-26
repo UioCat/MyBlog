@@ -29,7 +29,7 @@ public class Tourist {
     private String password;
 
     /**
-     * 头像图片
+     * 头像图片，Base64字符串
      */
     private String headPortraits;
 }
