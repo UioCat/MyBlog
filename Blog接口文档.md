@@ -104,6 +104,7 @@ V1	2021-07-13	 初始化用户界面接口文档
   "info":{
     "author":"",
     "gmtTime":"2020-04-22 20:00:00",
+		"gmtModified":"2020-04-22 20:00:00", // V2新增，V3修改字段名
     "browseTimes":5000,	// V3修改字段名 
     "title":"深入理解Java",
     "content":"",
@@ -112,7 +113,6 @@ V1	2021-07-13	 初始化用户界面接口文档
     "comment":[{
       	"observer":"xiaoming",
     		"gmtCreate":"2020-04-22 20:00:00",	// V3修改字段名
-	    	"gmtModified":"2020-04-22 20:00:00", // V2新增，V3修改字段名
       	"content":"666",
       	"headPortraits":"https://www.uiofield.top/file/2222/head.png"
     	}
