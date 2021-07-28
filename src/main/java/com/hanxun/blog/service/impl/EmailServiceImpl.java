@@ -4,7 +4,6 @@ import com.hanxun.blog.config.BlogConstant;
 import com.hanxun.blog.dto.ToEmail;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.EmailService;
-import com.hanxun.blog.utils.BackMessage;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.utils.SendUtil;
 import org.slf4j.Logger;
@@ -25,11 +24,11 @@ import java.util.regex.Pattern;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-//    @Autowired
-//    private JavaMailSender mailSender;
+    @Autowired
+    private JavaMailSender mailSender;
 
-//    @Value("${spring.mail.username}")
-//    private String from;
+    @Value("${spring.mail.username}")
+    private String from;
 
     private final static Logger logger = LoggerFactory.getLogger(SendUtil.class);
 
@@ -45,8 +44,8 @@ public class EmailServiceImpl implements EmailService {
     public void commonEmail(ToEmail toEmail) {
         //创建简单邮件消息
         SimpleMailMessage message = new SimpleMailMessage();
-//        //谁发的
-//        message.setFrom(from);
+        //谁发的
+        message.setFrom(from);
         //谁要接收
         message.setTo(toEmail.getTos());
         //邮件标题
@@ -54,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
         //邮件内容
         message.setText(toEmail.getContent());
         try {
-//            mailSender.send(message);
+            mailSender.send(message);
             throw new CustomException(BackEnum.SEND_ORDINARY_MAIL_SUCCESSFULLY);
         } catch (MailException e) {
             e.printStackTrace();

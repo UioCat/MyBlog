@@ -41,13 +41,13 @@ public class LoginServiceImpl implements LoginService {
         }
 
         //判断验证码是否正确
-//        String redisCode = redisTemplate.opsForValue().get(email);
-//        if (StringUtils.isBlank(redisCode)) {
-//            throw new CustomException(BackEnum.THE_VERIFICATION_CODE_DOES_NOT_EXIST_OR_HAS_EXPIRED);
-//        }
-//        if (!StringUtils.equals(code, redisCode.substring(6))) {
-//            throw new CustomException(BackEnum.VERIFICATION_CODE_ERROR);
-//        }
+        String redisCode = redisTemplate.opsForValue().get(email);
+        if (StringUtils.isBlank(redisCode)) {
+            throw new CustomException(BackEnum.THE_VERIFICATION_CODE_DOES_NOT_EXIST_OR_HAS_EXPIRED);
+        }
+        if (!StringUtils.equals(code, redisCode.substring(6))) {
+            throw new CustomException(BackEnum.VERIFICATION_CODE_ERROR);
+        }
 
         //密码加密
         String hashpw = BCrypt.hashpw(password, BCrypt.gensalt());
