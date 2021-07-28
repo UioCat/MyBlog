@@ -4,7 +4,6 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.hanxun.blog.exception.CustomException;
-import com.hanxun.blog.handle.ExceptionHandle;
 import com.hanxun.blog.utils.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

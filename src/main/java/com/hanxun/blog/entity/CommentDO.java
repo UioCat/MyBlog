@@ -1,7 +1,9 @@
 package com.hanxun.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,8 +12,10 @@ import java.util.Date;
  * Description: 评论
  */
 @Data
-public class Comment {
+@TableName("comment")
+public class CommentDO implements Serializable {
 
+    private static final long serialVersionUID = -8308995847521899198L;
     /**
      * id
      */
@@ -46,4 +50,5 @@ public class Comment {
      * 博客id
      */
     private Long blogId;
+
 }

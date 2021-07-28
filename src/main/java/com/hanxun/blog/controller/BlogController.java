@@ -1,6 +1,6 @@
 package com.hanxun.blog.controller;
 
-import com.hanxun.blog.entity.Article;
+import com.hanxun.blog.entity.ArticleDO;
 import com.hanxun.blog.service.BlogService;
 import com.hanxun.blog.utils.BackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,10 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+    /**
+     * 获取首页接口
+     * @return
+     */
     @GetMapping("/getIndex")
     public BackMessage getIndex() {
         return null;
@@ -36,7 +40,7 @@ public class BlogController {
     }
 
     @PostMapping("/addArticle")
-    public BackMessage addArticle(@RequestBody Article article){
+    public BackMessage addArticle(@RequestBody ArticleDO article){
         int row = blogService.addArticle(article);
         if (row > 0) {
             return BackMessage.success();

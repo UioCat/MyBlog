@@ -1,6 +1,7 @@
 package com.hanxun.blog.controller;
 
-import com.hanxun.blog.entity.Tourist;
+import com.hanxun.blog.controller.req.TouristLoginReq;
+import com.hanxun.blog.controller.req.TouristRegisterReq;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.EmailService;
@@ -29,20 +30,18 @@ public class TouristController {
      * @return
      */
     @PostMapping("/login")
-    public BackMessage login(@RequestBody Tourist tourist) {
-        String token = loginService.login(tourist);
+    public BackMessage login(@RequestBody TouristLoginReq touristLoginReq) {
+        String token = loginService.login(touristLoginReq);
         return BackMessage.success(token);
     }
-
 
     /**
      * 游客注册
      * @return
      */
     @GetMapping("/register")
-    public BackMessage register(@RequestParam("email") String email,@RequestParam("password") String password,
-                                @RequestParam("code") String code) {
-        if (loginService.register(email,password,code)) {
+    public BackMessage register(@RequestBody TouristRegisterReq touristRegisterReq) {
+        if (loginService.register(touristRegisterReq)) {
             return BackMessage.success();
         }
         return BackMessage.error();
@@ -64,6 +63,7 @@ public class TouristController {
      * 评论
      * @return
      */
+    @PostMapping("/comment")
     public BackMessage comment() {
         return null;
     }
@@ -72,9 +72,11 @@ public class TouristController {
      * 游客点赞接口
      * @return
      */
+    @PostMapping("/star")
     public BackMessage star() {
         return null;
     }
+
 
     @GetMapping("/loginSuccess")
     public BackMessage loginSuccess(){

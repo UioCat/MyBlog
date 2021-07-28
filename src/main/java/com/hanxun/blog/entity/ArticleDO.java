@@ -15,7 +15,9 @@ import lombok.Data;
  */
 @Data
 @TableName(value = "article")
-public class Article implements Serializable {
+public class ArticleDO implements Serializable {
+
+    private static final long serialVersionUID = 7993296555636685540L;
     /**
      * 主键
      */
@@ -52,7 +54,16 @@ public class Article implements Serializable {
     /**
      * 删除标记
      */
-    private Boolean deleteFlag;
+    private Byte isDelete;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 点赞数
+     */
+    private Long starCount;
+
+    /**
+     * 浏览数
+     */
+    private Long browseTimes;
+
 }

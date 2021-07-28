@@ -1,21 +1,21 @@
 package com.hanxun.blog.dao;
 
-import com.hanxun.blog.entity.Tourist;
+import com.hanxun.blog.entity.TouristDO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TouristDao {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Tourist record);
+    int insert(TouristDO record);
 
-    int insertSelective(Tourist record);
+    int insertSelective(TouristDO record);
 
-    Tourist selectByPrimaryKey(Long id);
+    TouristDO selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Tourist record);
+    int updateByPrimaryKeySelective(TouristDO record);
 
-    int updateByPrimaryKey(Tourist record);
+    int updateByPrimaryKey(TouristDO record);
 
-    Tourist selectByAccount(String account);
+    TouristDO selectByAccount(String account);
 }

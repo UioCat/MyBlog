@@ -1,12 +1,18 @@
 package com.hanxun.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 游客/访客实体类
  */
 @Data
-public class Tourist {
+@TableName("tourist")
+public class TouristDO implements Serializable {
+
+    private static final long serialVersionUID = 3174418066100826932L;
 
     /**
      * id
@@ -32,4 +38,5 @@ public class Tourist {
      * 头像图片，Base64字符串
      */
     private String headPortraits;
+
 }

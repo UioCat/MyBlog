@@ -1,13 +1,12 @@
 package com.hanxun.blog.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hanxun.blog.dao.ArticleDao;
 import com.hanxun.blog.dto.ArticleQueryDTO;
-import com.hanxun.blog.entity.Article;
+import com.hanxun.blog.entity.ArticleDO;
 import com.hanxun.blog.service.BlogService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class BlogServiceImpl implements BlogService {
      * @return
      */
     @Override
-    public int addArticle(Article article) {
+    public int addArticle(ArticleDO article) {
         return articleDao.insert(article);
     }
 
@@ -35,13 +34,13 @@ public class BlogServiceImpl implements BlogService {
      * @return
      */
     @Override
-    public IPage<Article> selectPage(ArticleQueryDTO articleQueryDTO) {
-        LambdaQueryWrapper<Article> lambdaQueryWrapper = Wrappers.lambdaQuery();
+    public IPage<ArticleDO> selectPage(ArticleQueryDTO articleQueryDTO) {
+        LambdaQueryWrapper<ArticleDO> lambdaQueryWrapper = Wrappers.lambdaQuery();
         lambdaQueryWrapper.like(StringUtils.isNotBlank(articleQueryDTO.getArticleTitle()),
-                Article::getArticleTitle,articleQueryDTO.getArticleTitle());
+                ArticleDO::getArticleTitle,articleQueryDTO.getArticleTitle());
 
-        Page<Article> page = new Page<>(articleQueryDTO.getCurrent(),articleQueryDTO.getSize());
-        IPage<Article> iPage = articleDao.selectPage(page, lambdaQueryWrapper);
+        Page<ArticleDO> page = new Page<>(articleQueryDTO.getCurrent(),articleQueryDTO.getSize());
+        IPage<ArticleDO> iPage = articleDao.selectPage(page, lambdaQueryWrapper);
         return iPage;
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanxun.blog.dao.TouristDao">
-  <resultMap id="BaseResultMap" type="com.hanxun.blog.entity.Tourist">
+  <resultMap id="BaseResultMap" type="com.hanxun.blog.entity.TouristDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -21,13 +21,13 @@
     delete from tourist
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hanxun.blog.entity.Tourist" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hanxun.blog.entity.TouristDO" useGeneratedKeys="true">
     insert into tourist (account, `password`, head_portraits, 
       username)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{headPortraits,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hanxun.blog.entity.Tourist" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hanxun.blog.entity.TouristDO" useGeneratedKeys="true">
     insert into tourist
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="account != null">
@@ -58,7 +58,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hanxun.blog.entity.Tourist">
+  <update id="updateByPrimaryKeySelective" parameterType="com.hanxun.blog.entity.TouristDO">
     update tourist
     <set>
       <if test="account != null">
@@ -76,7 +76,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hanxun.blog.entity.Tourist">
+  <update id="updateByPrimaryKey" parameterType="com.hanxun.blog.entity.TouristDO">
     update tourist
     set account = #{account,jdbcType=VARCHAR},
       `password` = #{password,jdbcType=VARCHAR},
