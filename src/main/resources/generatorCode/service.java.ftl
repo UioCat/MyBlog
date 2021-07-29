@@ -1,7 +1,7 @@
 package ${package.Service};
 
 import ${package.Entity}.${entity};
-import com.bluelight.tsp.common.web.PageInfo;
+import com.hanxun.blog.entity.base.PageInfo;
 /**
  * <p>
  * ${table.comment!} 服务类

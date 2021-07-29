@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
                 //拦截的路径
                 .addPathPatterns("/**")
                 //排除登录注册接口
-                .excludePathPatterns("/tourist/login","/tourist/register","/generator/codeGenerator");
+                .excludePathPatterns("/tourist/login","/tourist/register","/generator/codeGenerator","/addArticle");
     }
 
 

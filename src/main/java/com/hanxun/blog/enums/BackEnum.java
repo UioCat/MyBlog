@@ -91,7 +91,22 @@ public enum BackEnum {
     /**
      * 登录失败
      */
-    LOGIN_FAIL(13, "登录失败！账号或者密码不对！")
+    LOGIN_FAIL(13, "登录失败！账号或者密码不对！"),
+
+    /**
+     * 插入失败
+     */
+    INSERT_FAILED(14,"插入失败"),
+
+    /**
+     * 修改失败
+     */
+    UPDATE_FAILED(15,"修改失败"),
+
+    /**
+     * 删除失败
+     */
+    DELETE_FAILED(16,"删除失败")
     ;
 
 

@@ -8,13 +8,15 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.hanxun.blog.dto.GeneratorDataInfo;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GeneratorConfig {
 
-    public static void genDal( String mode, String[] tables){
+    public static void genDal(String mode, String[] tables, GeneratorDataInfo params){
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -33,13 +35,12 @@ public class GeneratorConfig {
         gc.setIdType(IdType.AUTO);
         gc.setFileOverride(true);
 
-
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://:3306/blog?cuseUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false");
+        dsc.setUrl(params.getUrl());
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("");
+        dsc.setUsername(params.getUsername());
+        dsc.setPassword(params.getPassword());
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -82,10 +83,10 @@ public class GeneratorConfig {
         //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
         templateConfig.setController(null);
         // 用自己的模板 避免每次代码生成时因为时间差异导致所有entity变化
-        templateConfig.setEntity("entity.java");
-        templateConfig.setMapper("mapper.java");
-        templateConfig.setService("batchmapper.java");
-        templateConfig.setServiceImpl("batchmapperImpl.java");
+        templateConfig.setEntity("generatorCode/entity.java");
+        templateConfig.setMapper("generatorCode/mapper.java");
+        templateConfig.setService("generatorCode/batchmapper.java");
+        templateConfig.setServiceImpl("generatorCode/batchmapperImpl.java");
 
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
@@ -127,7 +128,7 @@ public class GeneratorConfig {
         mpg.execute();
     }
 
-    public static void genService( String[] tables){
+    public static void genService( String[] tables, GeneratorDataInfo params){
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -148,10 +149,10 @@ public class GeneratorConfig {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://1.116.213.5:3306/blog?cuseUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false");
+        dsc.setUrl(params.getUrl());
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("Lxh123456,.");
+        dsc.setUsername(params.getUsername());
+        dsc.setPassword(params.getPassword());
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -181,8 +182,8 @@ public class GeneratorConfig {
         // 用自己的模板 避免每次代码生成时因为时间差异导致所有entity变化
         templateConfig.setEntity(null);
         templateConfig.setMapper(null);
-        templateConfig.setService("service.java");
-        templateConfig.setServiceImpl("serviceImpl.java");
+        templateConfig.setService("generatorCode/service.java");
+        templateConfig.setServiceImpl("generatorCode/serviceImpl.java");
 
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);

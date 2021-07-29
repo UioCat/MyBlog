@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bluelight.tsp.common.utils.StringUtils;
-import com.bluelight.tsp.common.utils.PageUtils;
-import com.bluelight.tsp.common.web.PageInfo;
-import com.bluelight.tsp.common.enums.BusinessErrorCodes;
-import com.bluelight.tsp.common.exceptions.BusinessException;
+import org.apache.commons.lang3.StringUtils;
+import com.hanxun.blog.utils.PageUtils;
+import com.hanxun.blog.entity.base.PageInfo;
+import com.hanxun.blog.enums.BackEnum;
+import com.hanxun.blog.exception.CustomException;
 
 import javax.annotation.Resource;
 /**
@@ -84,7 +84,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     public void add(${entity} param) {
 
         if (!${table.mapperName?uncap_first}.save(param)) {
-            throw new BusinessException(BusinessErrorCodes.INSERT_FAILED);
+            throw new CustomException(BackEnum.INSERT_FAILED);
         }
     }
 
@@ -97,7 +97,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     @Transactional(rollbackFor = Exception.class)
     public void updateById(${entity} param) {
         if (!${table.mapperName?uncap_first}.updateById(param)) {
-            throw new BusinessException(BusinessErrorCodes.UPDATE_FAILED);
+            throw new CustomException(BackEnum.UPDATE_FAILED);
         }
     }
 
@@ -110,7 +110,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     @Transactional(rollbackFor = Exception.class)
     public void removeById(Long id) {
         if(!${table.mapperName?uncap_first}.removeById(id)){
-            throw new BusinessException(BusinessErrorCodes.DELETE_FAILED);
+            throw new CustomException(BackEnum.DELETE_FAILED);
         }
     }
 }

@@ -16,9 +16,9 @@ class BlogApplicationTests {
     @Test
     public void codeGenerator(){
         CodeGeneratorDTO codeGeneratorDTO = new CodeGeneratorDTO();
-        codeGeneratorDTO.setMode("id主键-snowflake");
+        codeGeneratorDTO.setMode("2");
         codeGeneratorDTO.setTables(new String[]{"article", "comment", "motto", "tourist"});
-        GeneratorConfig.genDal(codeGeneratorDTO.getMode(),codeGeneratorDTO.getTables());
-        GeneratorConfig.genService(codeGeneratorDTO.getTables());
+//        GeneratorConfig.genDal(codeGeneratorDTO.getMode(),codeGeneratorDTO.getTables());
+//        GeneratorConfig.genService(codeGeneratorDTO.getTables());
     }
 }

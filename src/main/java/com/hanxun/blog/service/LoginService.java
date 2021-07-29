@@ -17,7 +17,7 @@ public interface LoginService {
 
     /**
      * 游客登录
-     * @param tourist
+     * @param loginReq
      * @return
      */
     String login(TouristLoginReq loginReq);

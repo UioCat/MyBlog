@@ -79,8 +79,8 @@ public class LoginServiceImpl implements LoginService {
             throw new CustomException(BackEnum.PWD_ERROR);
         }
         TouristDO u = new TouristDO();
-        u.setPassword(u.getPassword());
-        u.setUsername(u.getUsername());
+        u.setPassword(touristInfo.getPassword());
+        u.setUsername(touristInfo.getUsername());
         return JWTUtil.getToken(u);
     }
 

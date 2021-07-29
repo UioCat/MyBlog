@@ -18,9 +18,9 @@ public class UserController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+
     @RequestMapping("/test")
     public void testRedis(){
-        String projectPath = System.getProperty("user.dir");
-        System.out.println(projectPath);
+
     }
 }
