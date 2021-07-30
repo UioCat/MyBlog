@@ -1,21 +1,36 @@
 package com.hanxun.blog.service.impl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
 import com.hanxun.blog.dao.TouristDao;
 import com.hanxun.blog.entity.TouristDO;
+import com.hanxun.blog.entity.base.UserToken;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.service.LoginService;
+import com.hanxun.blog.utils.BackMessage;
 import com.hanxun.blog.utils.JWTUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -24,10 +39,13 @@ public class LoginServiceImpl implements LoginService {
     private EmailService emailService;
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private TouristDao touristDao;
 
     @Autowired
-    private TouristDao touristDao;
+    private RedisTemplate redisTemplate;
+
+    @Value("${jwt.key}")
+    private String jwtKey;
 
     /**
      * 游客注册
@@ -44,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         //判断验证码是否正确
-        String redisCode = redisTemplate.opsForValue().get(touristRegisterReq.getEmail());
+        String redisCode = (String) redisTemplate.opsForValue().get(touristRegisterReq.getEmail());
         if (StringUtils.isBlank(redisCode)) {
             throw new CustomException(BackEnum.THE_VERIFICATION_CODE_DOES_NOT_EXIST_OR_HAS_EXPIRED);
         }
@@ -70,7 +88,8 @@ public class LoginServiceImpl implements LoginService {
      * @return
      */
     @Override
-    public String login(TouristLoginReq loginReq) {
+    public String login(TouristLoginReq loginReq,String ip,String userAgent) {
+
         TouristDO touristInfo = touristDao.selectByAccount(loginReq.getEmail());
         if (ObjectUtils.isEmpty(touristInfo)) {
             throw new CustomException(BackEnum.NO_USER);
@@ -78,10 +97,31 @@ public class LoginServiceImpl implements LoginService {
         if (BCrypt.checkpw(BCrypt.hashpw(loginReq.getPassword(),BCrypt.gensalt()), touristInfo.getPassword())) {
             throw new CustomException(BackEnum.PWD_ERROR);
         }
-        TouristDO u = new TouristDO();
-        u.setPassword(touristInfo.getPassword());
-        u.setUsername(touristInfo.getUsername());
-        return JWTUtil.getToken(u);
+
+        //登录时间
+        LocalDateTime issuedAt = LocalDateTime.now();
+
+        //过期时间,半小时
+        LocalDateTime expiresAt = issuedAt.plusSeconds(TimeUnit.MINUTES.toSeconds(30));
+
+        // 距离过期时间剩余的秒数
+        int expiresSeconds = (int) Duration.between(issuedAt, expiresAt).getSeconds();
+
+        // 存储Session
+        UserToken userToken = new UserToken();
+        // 随机生成uuid，作为token的id
+        userToken.setId(UUID.randomUUID().toString().replace("-", ""));
+        userToken.setUserId(touristInfo.getId());
+        userToken.setIssuedAt(issuedAt);
+        userToken.setExpiresAt(expiresAt);
+        userToken.setUserAgent(userAgent);
+        userToken.setIp(ip);
+
+        //序列化Token对象到Redis
+        this.redisTemplate.opsForValue().set("token:"+ touristInfo.getId(), userToken, expiresSeconds, TimeUnit.SECONDS);
+
+        //生成token信息
+        return JWTUtil.getToken(touristInfo, userToken, jwtKey, issuedAt);
     }
 
 }

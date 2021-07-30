@@ -1,9 +1,12 @@
 package com.hanxun.blog.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -18,13 +21,19 @@ public class RedisConfig {
     //配置序列化器
     @Bean
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory factory){
-        RedisTemplate<String,Object>template=new RedisTemplate<>();
-        //关联
+        // 1.创建 redisTemplate 模版
+        RedisTemplate<String,Object> template=new RedisTemplate<>();
+        // 2.关联 redisConnectionFactory
         template.setConnectionFactory(factory);
-        //设置key的序列化器
+//        // 3.创建 序列化类
+//        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+//        ObjectMapper om = new ObjectMapper();
+//        // 6.序列化类，对象映射设置
+//        jackson2JsonRedisSerializer.setObjectMapper(om);
+        // 7.设置 value 的转化格式和 key 的转化格式
+        template.setValueSerializer(new JdkSerializationRedisSerializer());
         template.setKeySerializer(new StringRedisSerializer());
-        //设置value的序列化器
-        template.setValueSerializer(new StringRedisSerializer());
+        template.afterPropertiesSet();
         return template;
     }
 

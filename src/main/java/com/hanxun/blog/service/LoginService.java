@@ -2,7 +2,6 @@ package com.hanxun.blog.service;
 
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
-import com.hanxun.blog.entity.TouristDO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +19,5 @@ public interface LoginService {
      * @param loginReq
      * @return
      */
-    String login(TouristLoginReq loginReq);
+    String login(TouristLoginReq loginReq, String ip, String userAgent);
 }

@@ -1,14 +1,34 @@
 package com.hanxun.blog.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
+import com.hanxun.blog.entity.TouristDO;
+import com.hanxun.blog.entity.base.UserToken;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.service.LoginService;
 import com.hanxun.blog.utils.BackMessage;
+import com.hanxun.blog.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author han xun
@@ -25,14 +45,20 @@ public class TouristController {
     @Autowired
     private LoginService loginService;
 
+
     /**
      * 游客登陆
      * @return
      */
     @PostMapping("/login")
-    public BackMessage login(@RequestBody TouristLoginReq touristLoginReq) {
-        String token = loginService.login(touristLoginReq);
+    public BackMessage login(HttpServletRequest request, HttpServletResponse response, @RequestBody TouristLoginReq touristLoginReq) {
+        //登录信息
+        String ip = request.getRemoteAddr();
+        String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+
+        String token = loginService.login(touristLoginReq, ip, userAgent);
         return BackMessage.success(token);
+
     }
 
     /**

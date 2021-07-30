@@ -1,6 +1,7 @@
 package com.hanxun.blog.config;
 
 import com.hanxun.blog.Interceptor.JWTInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -26,13 +27,18 @@ public class WebConfig implements WebMvcConfigurer {
             //registry.addResourceHandler("/static/models/**").addResourceLocations("classpath:/static/models/");
     }
 
+    @Bean
+    JWTInterceptor jwtInterceptor() {
+        return new JWTInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JWTInterceptor())
+        registry.addInterceptor(jwtInterceptor())
                 //拦截的路径
                 .addPathPatterns("/**")
                 //排除登录注册接口
-                .excludePathPatterns("/tourist/login","/tourist/register","/generator/codeGenerator","/addArticle");
+                .excludePathPatterns("/tourist/login","/tourist/register","/generator/codeGenerator");
     }
 
 
