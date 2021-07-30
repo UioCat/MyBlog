@@ -43,3 +43,6 @@ mybatis-plus:
   type-aliases-package: com.hanxun.blog.entity
   configuration:
     map-underscore-to-camel-case: true
+
+jwt:
+  key:
