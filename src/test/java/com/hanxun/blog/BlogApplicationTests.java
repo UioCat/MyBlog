@@ -1,10 +1,10 @@
 package com.hanxun.blog;
 
 import com.hanxun.blog.config.GeneratorConfig;
-import com.hanxun.blog.dto.CodeGeneratorDTO;
+import com.hanxun.blog.dto.GeneratorDataInfo;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @SpringBootTest
 class BlogApplicationTests {
@@ -13,12 +13,24 @@ class BlogApplicationTests {
     void contextLoads() {
     }
 
+
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
     @Test
     public void codeGenerator(){
-        CodeGeneratorDTO codeGeneratorDTO = new CodeGeneratorDTO();
-        codeGeneratorDTO.setMode("2");
-        codeGeneratorDTO.setTables(new String[]{"article", "comment", "motto", "tourist"});
-//        GeneratorConfig.genDal(codeGeneratorDTO.getMode(),codeGeneratorDTO.getTables());
-//        GeneratorConfig.genService(codeGeneratorDTO.getTables());
+        String[] tableArray = {"article", "comment", "motto", "tourist"};
+
+        GeneratorDataInfo generatorDataInfo = new GeneratorDataInfo();
+        generatorDataInfo.setUrl(url);
+        generatorDataInfo.setUsername(username);
+        generatorDataInfo.setPassword(password);
+        GeneratorConfig.genDal(tableArray,  generatorDataInfo);
     }
 }

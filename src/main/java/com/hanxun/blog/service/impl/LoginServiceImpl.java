@@ -1,17 +1,15 @@
 package com.hanxun.blog.service.impl;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
-import com.hanxun.blog.dao.TouristDao;
 import com.hanxun.blog.entity.TouristDO;
 import com.hanxun.blog.entity.base.UserToken;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
+import com.hanxun.blog.mapper.TouristMapper;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.service.LoginService;
-import com.hanxun.blog.utils.BackMessage;
 import com.hanxun.blog.utils.JWTUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,16 +17,11 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -37,9 +30,8 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private EmailService emailService;
-
     @Autowired
-    private TouristDao touristDao;
+    private TouristMapper touristMapper;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -78,23 +70,27 @@ public class LoginServiceImpl implements LoginService {
         tourist.setAccount(touristRegisterReq.getEmail());
         tourist.setPassword(hashpw);
         tourist.setUsername(touristRegisterReq.getUsername());
-        int row = touristDao.insertSelective(tourist);
+        int row = touristMapper.insert(tourist);
         return row > 0;
     }
 
     /**
      * 游客登录
      * @param loginReq
+     * @param loginReq
      * @return
      */
     @Override
-    public String login(TouristLoginReq loginReq,String ip,String userAgent) {
+    public String login(TouristLoginReq loginReq, String ip, String userAgent) {
 
-        TouristDO touristInfo = touristDao.selectByAccount(loginReq.getEmail());
+        QueryWrapper<TouristDO> objectQueryWrapper = new QueryWrapper<>();
+        objectQueryWrapper.eq("account", loginReq.getEmail());
+        TouristDO touristInfo = touristMapper.selectOne(objectQueryWrapper);
+
         if (ObjectUtils.isEmpty(touristInfo)) {
             throw new CustomException(BackEnum.NO_USER);
         }
-        if (BCrypt.checkpw(BCrypt.hashpw(loginReq.getPassword(),BCrypt.gensalt()), touristInfo.getPassword())) {
+        if (BCrypt.checkpw(BCrypt.hashpw(loginReq.getPassword(), BCrypt.gensalt()), touristInfo.getPassword())) {
             throw new CustomException(BackEnum.PWD_ERROR);
         }
 

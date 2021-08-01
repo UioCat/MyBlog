@@ -10,19 +10,14 @@ import io.swagger.annotations.ApiModelProperty;
 <#if entityLombokModel>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 </#if>
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 /**
-* ${table.comment!}
-*
-* @author ${author}
-*/
+ * ${table.comment!} 实体类
+ * @author ${author}
+ * @date ${date}
+ */
 <#if entityLombokModel>
 @Data
 <#if superEntityClass??>
@@ -30,7 +25,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 <#else>
 @EqualsAndHashCode(callSuper = false)
 </#if>
-@Accessors(chain = true)
 </#if>
 <#if table.convert>
 @TableName("${table.name}")
@@ -46,9 +40,6 @@ public class ${entity} extends Model<${entity}> {
 public class ${entity} implements Serializable {
 </#if>
 
-<#if entitySerialVersionUID>
-    private static final long serialVersionUID = 1L;
-</#if>
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
     <#if field.keyFlag>
@@ -84,10 +75,8 @@ public class ${entity} implements Serializable {
     <#elseif field.convert>
     @TableField("${field.name}")
     </#if>
-    <#if field.propertyType == "LocalDateTime">
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    <#if field.propertyType == "Date">
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     </#if>
 <#-- 乐观锁注解 -->
     <#if (versionFieldName!"") == field.name>
@@ -101,59 +90,4 @@ public class ${entity} implements Serializable {
 </#list>
 <#------------  END 字段循环遍历  ---------->
 
-<#if !entityLombokModel>
-    <#list table.fields as field>
-        <#if field.propertyType == "boolean">
-            <#assign getprefix="is"/>
-        <#else>
-            <#assign getprefix="get"/>
-        </#if>
-        public ${field.propertyType} ${getprefix}${field.capitalName}() {
-        return ${field.propertyName};
-        }
-
-        <#if entityBuilderModel>
-            public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
-        <#else>
-            public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
-        </#if>
-        this.${field.propertyName} = ${field.propertyName};
-        <#if entityBuilderModel>
-            return this;
-        </#if>
-        }
-    </#list>
-</#if>
-
-<#if entityColumnConstant>
-    <#list table.fields as field>
-        public static final String ${field.name?upper_case} = "${field.name}";
-
-    </#list>
-</#if>
-<#if activeRecord>
-    @Override
-    protected Serializable pkVal() {
-    <#if keyPropertyName??>
-        return this.${keyPropertyName};
-    <#else>
-        return null;
-    </#if>
-    }
-
-</#if>
-<#if !entityLombokModel>
-    @Override
-    public String toString() {
-    return "${entity}{" +
-    <#list table.fields as field>
-        <#if field_index==0>
-            "${field.propertyName}=" + ${field.propertyName} +
-        <#else>
-            ", ${field.propertyName}=" + ${field.propertyName} +
-        </#if>
-    </#list>
-    "}";
-    }
-</#if>
 }

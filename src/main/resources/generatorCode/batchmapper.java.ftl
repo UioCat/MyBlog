@@ -4,13 +4,10 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
-* <p>
-    * ${table.comment!} 存储类
-    * </p>
-*
-* @author ${author}
-* @since ${date}
-*/
+ * ${table.comment!} 批量查询接口
+ * @author ${author}
+ * @date ${date}
+ */
 <#if kotlin>
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>

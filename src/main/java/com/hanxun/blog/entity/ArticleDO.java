@@ -1,7 +1,9 @@
 package com.hanxun.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.hanxun.blog.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,14 +16,24 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("comment")
-public class CommentDO extends BaseDO {
+@TableName("article")
+public class ArticleDO extends BaseDO {
 
 
     /**
-    * 博客id
+    * 标题
     */
-    private Long blogId;
+    private String articleTitle;
+
+    /**
+    * 内容
+    */
+    private String content;
+
+    /**
+    * 作者id
+    */
+    private Long authorId;
 
     /**
     * 创建时间
@@ -36,18 +48,18 @@ public class CommentDO extends BaseDO {
     private Date gmtModified;
 
     /**
-    * 是否删除
+    * 删除标记
     */
     private Boolean delete;
 
     /**
-    * 评论者邮箱
+    * 点赞数
     */
-    private String email;
+    private Long starCount;
 
     /**
-    * 评论内容
+    * 浏览数
     */
-    private String content;
+    private Long browseTimes;
 
 }

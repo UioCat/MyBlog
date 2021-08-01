@@ -6,13 +6,10 @@ import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
 
 /**
-* <p>
-    * ${table.comment!} 存储实现类
-    * </p>
-*
-* @author ${author}
-* @since ${date}
-*/
+ * ${table.comment!} 批量查询实现类
+ * @author ${author}
+ * @date ${date}
+ */
 @Component
 <#if kotlin>
 open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {

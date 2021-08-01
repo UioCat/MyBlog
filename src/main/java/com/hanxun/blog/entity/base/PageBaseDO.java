@@ -9,7 +9,7 @@ import lombok.Data;
  * @Date: Create in 2021/5/27
  **/
 @Data
-public class PageBaseEntity {
+public class PageBaseDO {
     /**
      * 总的记录条数
      */

@@ -1,6 +1,6 @@
 package com.hanxun.blog.batchmapper;
 
-import com.hanxun.blog.entity.ArticleDO;
+import com.hanxun.blog.entity.CommentDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author han xun
  * @date 2021-08-01
  */
-public interface ArticleBatchMapper extends IService<ArticleDO> {
+public interface CommentBatchMapper extends IService<CommentDO> {
 
 }

@@ -6,8 +6,7 @@ import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.utils.SendUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,18 +21,17 @@ import java.util.regex.Pattern;
 
 
 @Service
+@Slf4j
 public class EmailServiceImpl implements EmailService {
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String from;
 
-    private final static Logger logger = LoggerFactory.getLogger(SendUtil.class);
-
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 发送普通邮件

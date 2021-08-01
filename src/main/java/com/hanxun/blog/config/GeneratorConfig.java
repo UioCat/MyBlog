@@ -6,17 +6,19 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.hanxun.blog.dto.GeneratorDataInfo;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GeneratorConfig {
 
-    public static void genDal(String mode, String[] tables, GeneratorDataInfo params){
+    public static void genDal(String[] tables, GeneratorDataInfo params){
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -24,16 +26,17 @@ public class GeneratorConfig {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("code-generator");
+        gc.setAuthor("han xun");
         gc.setOpen(false);
-        mpg.setGlobalConfig(gc);
-
-        gc.setEntityName("%sEntity");
+        gc.setDateType(DateType.ONLY_DATE);
+        gc.setEntityName("%sDO");
         gc.setMapperName("%sMapper");
         gc.setServiceName("%sBatchMapper");
-        gc.setServiceImplName("%sBatchMapperImpl");
+//        gc.setServiceImplName("%sBatchMapperImpl");
         gc.setIdType(IdType.AUTO);
         gc.setFileOverride(true);
+
+        mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
@@ -95,23 +98,9 @@ public class GeneratorConfig {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        if("1".equals(mode)){
-            strategy.setSuperEntityClass("com.hanxun.blog.entity.base.BaseEntity");
-            strategy.setLogicDeleteFieldName("delete_flag");
-            strategy.setSuperEntityColumns("id","delete_flag");
-        }
-        else if("2".equals(mode)){
-            strategy.setSuperEntityClass("com.hanxun.blog.entity.base.AutoBaseEntity");
-            strategy.setLogicDeleteFieldName("delete_flag");
-            strategy.setSuperEntityColumns("id","delete_flag");
-        }
-        else if("3".equals(mode)){
-            strategy.setSuperEntityClass("com.hanxun.blog.entity.base.PageBaseEntity");
-        }
-        else {
-            System.out.println("请选择正确的主键模式！");
-            return;
-        }
+        strategy.setSuperEntityClass("com.hanxun.blog.entity.base.BaseDO");
+        strategy.setLogicDeleteFieldName("isDelete");
+        strategy.setSuperEntityColumns("id","isDelete");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         // 公共父类
@@ -128,83 +117,4 @@ public class GeneratorConfig {
         mpg.execute();
     }
 
-    public static void genService( String[] tables, GeneratorDataInfo params){
-        // 代码生成器
-        AutoGenerator mpg = new AutoGenerator();
-
-        // 全局配置
-        GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("code-generator");
-        gc.setOpen(false);
-//        gc.setSwagger2(true); //实体属性 Swagger2 注解
-        gc.setEntityName("%sEntity");
-        gc.setMapperName("%sBatchMapper");
-        gc.setServiceName("%sService");
-        gc.setServiceImplName("%sServiceImpl");
-        gc.setFileOverride(true);
-
-        mpg.setGlobalConfig(gc);
-
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(params.getUrl());
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername(params.getUsername());
-        dsc.setPassword(params.getPassword());
-        mpg.setDataSource(dsc);
-
-        // 包配置
-        PackageConfig pc = new PackageConfig();
-//        pc.setModuleName(module);
-        pc.setService( "service");
-        pc.setServiceImpl( "service.impl");
-        pc.setEntity(  "entity");
-        pc.setMapper(  "batchmapper");
-        pc.setParent("com.hanxun.blog");
-        mpg.setPackageInfo(pc);
-
-        // 自定义配置
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-            }
-        };
-
-        // 配置模板
-        TemplateConfig templateConfig = new TemplateConfig();
-
-        // 配置自定义输出模板
-        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        templateConfig.setController(null);
-        // 用自己的模板 避免每次代码生成时因为时间差异导致所有entity变化
-        templateConfig.setEntity(null);
-        templateConfig.setMapper(null);
-        templateConfig.setService("generatorCode/service.java");
-        templateConfig.setServiceImpl("generatorCode/serviceImpl.java");
-
-        templateConfig.setXml(null);
-        mpg.setTemplate(templateConfig);
-
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-//        strategy.setSuperEntityClass(BaseEntity.class);
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(true);
-        // 公共父类
-//        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
-        // 写于父类中的公共字段
-//        strategy.setSuperEntityColumns("id");
-        strategy.setInclude(tables);
-        strategy.setControllerMappingHyphenStyle(true);
-//
-//
-        mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        mpg.execute();
-    }
 }
