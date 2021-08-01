@@ -15,4 +15,8 @@ public class BaseController {
     public String index() {
         return "success";
     }
+
+    public Long getUserId() {
+        return null;
+    }
 }
