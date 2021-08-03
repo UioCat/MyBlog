@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 </#if>
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * ${table.comment!} 实体类

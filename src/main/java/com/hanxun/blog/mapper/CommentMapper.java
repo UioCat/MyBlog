@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  *  Mapper接口
  * @author han xun
- * @date 2021-08-01
+ * @date 2021-08-03
  */
 @Mapper
 public interface CommentMapper extends BaseMapper<CommentDO> {

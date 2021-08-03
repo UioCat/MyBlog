@@ -13,23 +13,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("comment")
-public class CommentDO extends BaseDO {
+@TableName("invite_code")
+public class InviteCodeDO extends BaseDO {
 
 
     /**
-    * 博客id
+    * 邀请码
     */
-    private Long blogId;
-
-    /**
-    * 评论者邮箱
-    */
-    private String email;
-
-    /**
-    * 评论内容
-    */
-    private String content;
+    private String code;
 
 }

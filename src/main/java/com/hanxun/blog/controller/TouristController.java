@@ -87,7 +87,7 @@ public class TouristController {
 
 
     @GetMapping("/loginSuccess")
-    public BackMessage loginSuccess(){
+    public BackMessage loginSuccess() {
         return BackMessage.success("你已经登陆");
     }
 }

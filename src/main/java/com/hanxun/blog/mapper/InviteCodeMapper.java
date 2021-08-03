@@ -1,6 +1,6 @@
 package com.hanxun.blog.mapper;
 
-import com.hanxun.blog.entity.ArticleDO;
+import com.hanxun.blog.entity.InviteCodeDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021-08-03
  */
 @Mapper
-public interface ArticleMapper extends BaseMapper<ArticleDO> {
+public interface InviteCodeMapper extends BaseMapper<InviteCodeDO> {
 
 }

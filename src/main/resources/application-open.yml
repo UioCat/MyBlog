@@ -1,8 +1,6 @@
 # github 上传配置文件，不涉及密码以及个人信息
 server:
   port: 9099
-
-#mail
 spring:
   mail:
     #smtp服务主机  qq邮箱则为smtp.qq.com
@@ -12,9 +10,9 @@ spring:
     # 编码集
     default-encoding: UTF-8
     #发送邮件的账户
-    username: qq@qq.com
+    username: qq@qq.com #待替换
     #授权码
-    password: xxxxxx
+    password: xxxxxx #待替换
     test-connection: true
     properties:
       mail:
@@ -23,26 +21,22 @@ spring:
           starttls:
             enable: true
             required: true
-
   #mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://IP:3306/blog?cuseUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+    #IP待替换
     username: root
-    password:
-
+    password: #待替换
   #redis
   redis:
-    host: IP
+    host: IP #待替换
     timeout: 1000
-
-
 #mybatis-plus
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.hanxun.blog.entity
   configuration:
     map-underscore-to-camel-case: true
-
 jwt:
-  key:
+  key: key

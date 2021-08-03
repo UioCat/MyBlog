@@ -1,6 +1,8 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.service.ManagerService;
 import com.hanxun.blog.utils.BackMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("admin")
-public class ManageController {
+public class ManagerController extends BaseController{
+
+    @Autowired
+    private ManagerService managerService;
 
     /**
      * 管理员登陆接口
@@ -26,7 +31,7 @@ public class ManageController {
      * 设置邀请码接口
      * @return
      */
-    public BackMessage setInviteCode() {
+    public BackMessage getInviteCode() {
         return null;
     }
 
