@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class InviteCodeDO extends BaseDO {
 
 
+    private static final long serialVersionUID = -8556720417988287529L;
     /**
     * 邀请码
     */

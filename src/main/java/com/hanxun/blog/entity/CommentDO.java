@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class CommentDO extends BaseDO {
 
 
+    private static final long serialVersionUID = 9082348323788767835L;
     /**
     * 博客id
     */

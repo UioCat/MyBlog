@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class TouristDO extends BaseDO {
 
 
+    private static final long serialVersionUID = -2878802666047558854L;
     /**
     * 账号
     */

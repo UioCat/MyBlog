@@ -38,5 +38,4 @@ public class UserToken implements Serializable {
 
     // 是否记住我
     private boolean remember;
-
 }

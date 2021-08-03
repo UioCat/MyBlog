@@ -16,6 +16,7 @@ import lombok.EqualsAndHashCode;
 public class ArticleDO extends BaseDO {
 
 
+    private static final long serialVersionUID = 5645043787086620875L;
     /**
     * 标题
     */

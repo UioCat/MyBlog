@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class MottoDO extends BaseDO {
 
 
+    private static final long serialVersionUID = -740862685749543857L;
     /**
     * 内容
     */

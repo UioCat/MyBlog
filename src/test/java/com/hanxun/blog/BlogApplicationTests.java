@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 @SpringBootTest
 class BlogApplicationTests {
 
@@ -22,5 +24,11 @@ class BlogApplicationTests {
         String superClass = "com.hanxun.blog.entity.base.BaseDO";
         String author = "han xun";
         GeneratorConfig.genDal(tableArray, packageName, superClass, author, url, username, password);
+    }
+
+    @Test
+    public void uuidTest() {
+        String code = UUID.randomUUID().toString();
+        System.out.println(code);
     }
 }
