@@ -47,7 +47,7 @@ public class TouristController {
      * 游客注册
      * @return
      */
-    @GetMapping("/register")
+    @PostMapping("/register")
     public BackMessage register(@RequestBody TouristRegisterReq touristRegisterReq) {
         if (loginService.register(touristRegisterReq)) {
             return BackMessage.success();
@@ -60,7 +60,7 @@ public class TouristController {
      * @return
      */
     @GetMapping("/sendCode")
-    public BackMessage sendCode(String email) {
+    public BackMessage sendCode(@RequestParam("email") String email) {
         if (!emailService.sendCode(email)) {
             throw new CustomException(BackEnum.SEND_CODE_FAIL);
         }

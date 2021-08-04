@@ -30,11 +30,15 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private EmailService emailService;
+
     @Autowired
     private TouristMapper touristMapper;
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private RedisTemplate<String,String> stringRedisTemplate;
 
     @Value("${jwt.key}")
     private String jwtKey;
@@ -52,13 +56,20 @@ public class LoginServiceImpl implements LoginService {
                 touristRegisterReq.getPassword(), touristRegisterReq.getVerifyCode())) {
             throw new CustomException(BackEnum.PARAM_ERROR);
         }
+        //判断账号是否存在
+        QueryWrapper<TouristDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account", touristRegisterReq.getEmail());
+        TouristDO touristDO = touristMapper.selectOne(queryWrapper);
+        if (null != touristDO) {
+            throw new CustomException(BackEnum.ACCOUNT_USED);
+        }
 
         //判断验证码是否正确
-        String redisCode = (String) redisTemplate.opsForValue().get(touristRegisterReq.getEmail());
+        String redisCode = stringRedisTemplate.opsForValue().get(touristRegisterReq.getEmail());
         if (StringUtils.isBlank(redisCode)) {
             throw new CustomException(BackEnum.THE_VERIFICATION_CODE_DOES_NOT_EXIST_OR_HAS_EXPIRED);
         }
-        if (!StringUtils.equals(touristRegisterReq.getVerifyCode(), redisCode.substring(6))) {
+        if (!StringUtils.equals(touristRegisterReq.getVerifyCode(), redisCode.substring(0,6))) {
             throw new CustomException(BackEnum.VERIFICATION_CODE_ERROR);
         }
         // todo 查询邀请码是否存在，并将该邀请码置为失效

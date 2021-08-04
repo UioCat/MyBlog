@@ -5,6 +5,3 @@ server:
 spring:
   profiles:
     active: dev
-mybatis:
-  config-location: classpath:mybatis-config.xml
-  mapper-locations: classpath:/mapper/*.xmlJavaMailSender

@@ -106,7 +106,12 @@ public enum BackEnum {
     /**
      * 删除失败
      */
-    DELETE_FAILED(16,"删除失败")
+    DELETE_FAILED(16,"删除失败"),
+
+    /**
+     * 用户名已存在
+     */
+    ACCOUNT_USED(17,"用户名已存在")
     ;
 
 

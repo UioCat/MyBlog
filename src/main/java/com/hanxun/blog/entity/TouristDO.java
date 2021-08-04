@@ -1,12 +1,16 @@
 package com.hanxun.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hanxun.blog.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 
 /**
  *  实体类
@@ -14,12 +18,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @date 2021-08-03
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("tourist")
-public class TouristDO extends BaseDO {
+public class TouristDO implements Serializable {
 
+    private static final long serialVersionUID = 1647258954429721998L;
 
-    private static final long serialVersionUID = -2878802666047558854L;
+    @TableId(type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long id;
+
     /**
     * 账号
     */
