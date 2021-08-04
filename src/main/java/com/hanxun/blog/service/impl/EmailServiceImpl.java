@@ -44,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         //谁发的
         message.setFrom(from);
-        //谁要接收
+        //发给谁
         message.setTo(toEmail.getTos());
         //邮件标题
         message.setSubject(toEmail.getSubject());
@@ -52,7 +52,6 @@ public class EmailServiceImpl implements EmailService {
         message.setText(toEmail.getContent());
         try {
             mailSender.send(message);
-            throw new CustomException(BackEnum.SEND_ORDINARY_MAIL_SUCCESSFULLY);
         } catch (MailException e) {
             e.printStackTrace();
             throw new CustomException(BackEnum.SEND_ORDINARY_MAIL_FAIL);

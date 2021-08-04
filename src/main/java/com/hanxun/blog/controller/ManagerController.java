@@ -1,8 +1,10 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.ManagerService;
 import com.hanxun.blog.utils.BackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("admin")
-public class ManagerController extends BaseController{
+public class ManagerController extends BaseController {
 
     @Autowired
     private ManagerService managerService;
@@ -31,8 +33,12 @@ public class ManagerController extends BaseController{
      * 设置邀请码接口
      * @return
      */
+    @GetMapping("/getInviteCode")
     public BackMessage getInviteCode() {
-        return null;
+        Long userId = super.getUserId();
+        // todo 鉴权
+        String inviteCode = managerService.generateInviteCode();
+        return new BackMessage<String>(BackEnum.REQUEST_SUCCESS, inviteCode);
     }
 
     /**
@@ -40,7 +46,10 @@ public class ManagerController extends BaseController{
      * @return
      */
     public BackMessage setMotto() {
-        return null;
+        Long userId = super.getUserId();
+        // todo 鉴权
+        managerService.addMotto();
+        return BackMessage.success();
     }
 
     /**

@@ -1,12 +1,17 @@
 package com.hanxun.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.hanxun.blog.config.BlogConstant;
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
+import com.hanxun.blog.entity.InviteCodeDO;
 import com.hanxun.blog.entity.TouristDO;
 import com.hanxun.blog.entity.base.UserToken;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
+import com.hanxun.blog.mapper.InviteCodeMapper;
 import com.hanxun.blog.mapper.TouristMapper;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.service.LoginService;
@@ -22,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +45,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private RedisTemplate<String,String> stringRedisTemplate;
+
+    @Autowired
+    private InviteCodeMapper inviteCodeMapper;
 
     @Value("${jwt.key}")
     private String jwtKey;
@@ -72,7 +81,15 @@ public class LoginServiceImpl implements LoginService {
         if (!StringUtils.equals(touristRegisterReq.getVerifyCode(), redisCode.substring(0,6))) {
             throw new CustomException(BackEnum.VERIFICATION_CODE_ERROR);
         }
-        // todo 查询邀请码是否存在，并将该邀请码置为失效
+
+        UpdateWrapper<InviteCodeDO> codeDOQueryWrapper = new UpdateWrapper<>();
+        codeDOQueryWrapper.eq("code", touristRegisterReq.getInviteCode())
+                .set("is_delete", BlogConstant.DELETE).set("gmt_modified", new Date());
+
+        int update = inviteCodeMapper.update(null, codeDOQueryWrapper);
+        if (update < 1) {
+            throw new CustomException(BackEnum.NO_INVITE_CODE);
+        }
 
         //密码加密
         String hashpw = BCrypt.hashpw(touristRegisterReq.getPassword(), BCrypt.gensalt());
@@ -81,6 +98,7 @@ public class LoginServiceImpl implements LoginService {
         tourist.setAccount(touristRegisterReq.getEmail());
         tourist.setPassword(hashpw);
         tourist.setUsername(touristRegisterReq.getUsername());
+        tourist.setGmtCreate(new Date());
         int row = touristMapper.insert(tourist);
         return row > 0;
     }

@@ -208,25 +208,51 @@ V1	2021-07-13	 初始化用户界面接口文档
 
 
 
-## 访客账号申请
+## 验证码邮件
+
+#### URL/GET
+
+```
+/tourist/sendCode
+```
+
+#### 发送数据
+
+```
+?email=406453373@qq.com
+```
+
+携带在URL中
+
+#### 返回数据
+
+```json
+{
+    "code": 200,
+    "message": "请求成功",
+    "info": "有效时间：5分钟"
+}
+```
+
+## 访客账号注册
 
 使用该账号将允许留言
 
 #### URL/POST
 
 ```
-
+/tourist/register
 ```
 
 #### 发送数据
 
 ```json
 {
-	"username":"",
-  "email":"",
-  "password":"",
-  "invitationCode":"",	// 游客注册邀请码
-  "verificationCode":""	// 邮箱验证码
+    "email":"406453373@qq.com",
+    "password":"123456",
+    "verifyCode":"374133",	// 验证码
+    "inviteCode":"2222",	// 邀请码
+    "username":"test-小娄"
 }
 ```
 
@@ -235,33 +261,33 @@ V1	2021-07-13	 初始化用户界面接口文档
 >验证码为邮箱验证码
 >
 >username为用户名，不为账号，账号为用户注册时邮箱
+>
+>inviteCode为邀请码
 
 #### 返回数据
 
 ```json
 {
-  "code":"200",
-  "message":"请求成功",
-  "info": 60
+    "code": 200,
+    "message": "请求成功",
+    "info": null
 }
 ```
-
-> info内数据为间隔时间（秒）
 
 ## 访客登陆
 
 #### URL/POST
 
 ```
-
+/tourist/login
 ```
 
 #### 发送数据
 
 ```json
 {
-		"email":"",
-		"password":""
+		"email":"406453373@qq.com",
+		"password":"123456"
 }
 ```
 
@@ -269,11 +295,13 @@ V1	2021-07-13	 初始化用户界面接口文档
 
 ```json
 {
-  "code":"200",
-  "message":"请求成功",
-  "info":
+    "code": 200,
+    "message": "请求成功",
+    "info": "eyJhbGciOiJIUzI1NiIsIkpXVCI6IkpXVCIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQyMjkwMjY2OTkxMTExNzgyNSwiaWF0IjoxNjI4MDgxNjM1LCJqdGkiOiI4OTA3NjU2MTdkMDA0Y2Y0YWVjOTE0NWEyZDJjMTk4YiJ9.Lp-AwQPMHwBAnnfg6lKppnXDg7jSJ_DGVdapKrS2T-M"
 }
 ```
+
+> info内信息为token
 
 ## 访客点赞
 
@@ -379,29 +407,27 @@ V1	2021-07-13	 初始化用户界面接口文档
 }
 ```
 
-## 设置邀请码/注册码
+## 生成邀请码
 
 #### URL/POST
 
 ```
-
+/admin/getInviteCode
 ```
 
 #### 发送数据
 
 ```json
-{
-	"registerCode":""
-}
+null
 ```
 
 #### 返回数据
 
 ```json
 {
-  "code":"200",
-  "message":"请求成功",
-  "info": null
+    "code": 200,
+    "message": "请求成功",
+    "info": "ddb12dc5-cfa3-40c4-aefd-075f55a3ed6b"
 }
 ```
 

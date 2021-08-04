@@ -1,5 +1,6 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.config.BlogConstant;
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
 import com.hanxun.blog.enums.BackEnum;
@@ -7,6 +8,7 @@ import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.EmailService;
 import com.hanxun.blog.service.LoginService;
 import com.hanxun.blog.utils.BackMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("tourist")
-public class TouristController {
+@Slf4j
+public class TouristController extends BaseController {
 
     @Autowired
     private EmailService emailService;
@@ -37,7 +40,7 @@ public class TouristController {
         //登录信息
         String ip = request.getRemoteAddr();
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
-
+        log.info("user login ip:{}, UA:{}, email:{}", ip, userAgent, touristLoginReq.getEmail());
         String token = loginService.login(touristLoginReq, ip, userAgent);
         return BackMessage.success(token);
 
@@ -64,7 +67,8 @@ public class TouristController {
         if (!emailService.sendCode(email)) {
             throw new CustomException(BackEnum.SEND_CODE_FAIL);
         }
-        return BackMessage.success();
+        String info = "有效时间" + BlogConstant.mailValidTime / 60 + "分钟";
+        return BackMessage.success(info);
     }
 
     /**

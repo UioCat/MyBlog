@@ -20,12 +20,15 @@ public interface BlogConstant {
     /**
      * 发送邮件有效时间
      */
-    Integer mailValidTime = 60 * 5;
+    Integer mailValidTime = 60 * 20;
 
     /**
      * 验证码发送主题
      */
     String mailSubject = "注册验证码";
 
-
+    /**
+     * 删除
+     */
+    Byte DELETE = 1;
 }

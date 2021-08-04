@@ -19,7 +19,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("tourist")
-public class TouristDO implements Serializable {
+public class TouristDO extends BaseDO {
 
     private static final long serialVersionUID = 1647258954429721998L;
 

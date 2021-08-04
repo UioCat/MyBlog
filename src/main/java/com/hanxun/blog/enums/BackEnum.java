@@ -64,11 +64,6 @@ public enum BackEnum {
     REPETITION(7, "数据重复添加"),
 
     /**
-     * 发送普通邮件成功
-     */
-    SEND_ORDINARY_MAIL_SUCCESSFULLY(8, "发送普通邮件成功"),
-
-    /**
      * 发送普通邮件失败
      */
     SEND_ORDINARY_MAIL_FAIL(9, "发送普通邮件失败"),
@@ -111,7 +106,14 @@ public enum BackEnum {
     /**
      * 用户名已存在
      */
-    ACCOUNT_USED(17,"用户名已存在")
+    ACCOUNT_USED(17,"邮箱已存在"),
+
+    /**
+     * 邀请码不存在
+     */
+    NO_INVITE_CODE(18, "邀请码不存在"),
+
+
     ;
 
 

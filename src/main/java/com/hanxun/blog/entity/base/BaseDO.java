@@ -28,7 +28,7 @@ public class BaseDO implements Serializable {
      * 是否删除
      */
     @TableLogic
-    private Boolean delete = false;
+    private Boolean isDelete = false;
 
     /**
      * 创建时间
