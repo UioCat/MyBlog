@@ -1,5 +1,7 @@
 package com.hanxun.blog.service;
 
+import java.util.List;
+
 /**
  * @author han xun
  * Date 2021/8/3 22:13
@@ -18,5 +20,5 @@ public interface ManagerService {
      * 新增一个motto
      * @return
      */
-    Boolean addMotto();
+    Boolean addMotto(String content);
 }

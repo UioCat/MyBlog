@@ -113,7 +113,10 @@ public enum BackEnum {
      */
     NO_INVITE_CODE(18, "邀请码不存在"),
 
-
+    /**
+     * 权限不足
+     */
+    INSUFFICIENT_PERMISSIONS(19,"权限不足")
     ;
 
 

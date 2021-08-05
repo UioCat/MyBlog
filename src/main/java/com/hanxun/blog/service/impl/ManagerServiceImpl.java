@@ -1,6 +1,7 @@
 package com.hanxun.blog.service.impl;
 
 import com.hanxun.blog.entity.InviteCodeDO;
+import com.hanxun.blog.entity.MottoDO;
 import com.hanxun.blog.mapper.InviteCodeMapper;
 import com.hanxun.blog.mapper.MottoMapper;
 import com.hanxun.blog.service.ManagerService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,8 +39,10 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Boolean addMotto() {
+    public Boolean addMotto(String content) {
         // todo 完善逻辑
-        return null;
+        MottoDO mottoDO = new MottoDO();
+        mottoDO.setContent(content);
+        return mottoMapper.insert(mottoDO) > 0;
     }
 }

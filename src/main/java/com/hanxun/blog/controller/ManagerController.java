@@ -1,12 +1,16 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.config.AdminConfig;
 import com.hanxun.blog.enums.BackEnum;
+import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.ManagerService;
 import com.hanxun.blog.utils.BackMessage;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -20,6 +24,9 @@ public class ManagerController extends BaseController {
 
     @Autowired
     private ManagerService managerService;
+
+    @Autowired
+    private AdminConfig adminConfig;
 
     /**
      * 管理员登陆接口
@@ -36,6 +43,9 @@ public class ManagerController extends BaseController {
     @GetMapping("/getInviteCode")
     public BackMessage getInviteCode() {
         Long userId = super.getUserId();
+        if (!userId.equals(adminConfig.getId())){
+            throw new CustomException(BackEnum.INSUFFICIENT_PERMISSIONS);
+        }
         // todo 鉴权
         String inviteCode = managerService.generateInviteCode();
         return new BackMessage<String>(BackEnum.REQUEST_SUCCESS, inviteCode);
@@ -45,10 +55,17 @@ public class ManagerController extends BaseController {
      * 新增motto接口
      * @return
      */
-    public BackMessage setMotto() {
+    @PostMapping("/setMotto")
+    public BackMessage setMotto(@RequestBody String content) {
         Long userId = super.getUserId();
+        if (!userId.equals(adminConfig.getId())){
+            throw new CustomException(BackEnum.INSUFFICIENT_PERMISSIONS);
+        }
         // todo 鉴权
-        managerService.addMotto();
+        if (StringUtils.isEmpty(content)) {
+            throw new CustomException(BackEnum.PARAM_ERROR);
+        }
+        managerService.addMotto(content);
         return BackMessage.success();
     }
 

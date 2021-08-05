@@ -1,5 +1,6 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.utils.ThreadLocalUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,6 @@ public class BaseController {
     }
 
     public Long getUserId() {
-        return null;
+        return ThreadLocalUtil.getCurrentUser().getUserId();
     }
 }
