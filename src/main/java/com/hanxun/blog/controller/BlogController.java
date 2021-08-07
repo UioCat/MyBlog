@@ -56,4 +56,13 @@ public class BlogController extends BaseController {
         articleService.starSwitch(userId, starReq.getArticleId());
         return BackMessage.success();
     }
+
+    /**
+     * 评论
+     * @return
+     */
+    @PostMapping("/comment")
+    public BackMessage comment() {
+        return null;
+    }
 }

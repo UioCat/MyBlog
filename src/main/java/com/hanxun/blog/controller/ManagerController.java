@@ -1,6 +1,7 @@
 package com.hanxun.blog.controller;
 
 import com.hanxun.blog.config.AdminConfig;
+import com.hanxun.blog.controller.req.AddArticleReq;
 import com.hanxun.blog.controller.req.SetMottoReq;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
@@ -9,7 +10,6 @@ import com.hanxun.blog.utils.BackMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 
 
 /**
@@ -28,21 +28,12 @@ public class ManagerController extends BaseController {
     private AdminConfig adminConfig;
 
     /**
-     * 管理员登陆接口
-     * @return
-     */
-    public BackMessage login() {
-        return null;
-    }
-
-    /**
      * 设置邀请码接口
      * @return
      */
     @GetMapping("/getInviteCode")
     public BackMessage getInviteCode() {
-        Long userId = super.getUserId();
-        // todo 管理员鉴权
+        super.isAdmin();
         String inviteCode = managerService.generateInviteCode();
         return new BackMessage<String>(BackEnum.REQUEST_SUCCESS, inviteCode);
     }
@@ -53,12 +44,23 @@ public class ManagerController extends BaseController {
      */
     @PostMapping("/setMotto")
     public BackMessage setMotto(@RequestBody SetMottoReq mottoReq) {
-        Long userId = super.getUserId();
-        // todo 管理员鉴权
+        super.isAdmin();
         if (StringUtils.isEmpty(mottoReq.getContent())) {
             throw new CustomException(BackEnum.PARAM_ERROR);
         }
         managerService.addMotto(mottoReq.getContent());
+        return BackMessage.success();
+    }
+
+    /**
+     * 新增文章
+     * @param addArticleReq
+     * @return
+     */
+    @PostMapping("/addArticle")
+    public BackMessage addArticle(@RequestBody AddArticleReq addArticleReq) {
+        super.isAdmin();
+        managerService.addArticle(addArticleReq);
         return BackMessage.success();
     }
 

@@ -1,7 +1,10 @@
 package com.hanxun.blog.service.impl;
 
+import com.hanxun.blog.controller.req.AddArticleReq;
+import com.hanxun.blog.entity.ArticleDO;
 import com.hanxun.blog.entity.InviteCodeDO;
 import com.hanxun.blog.entity.MottoDO;
+import com.hanxun.blog.mapper.ArticleMapper;
 import com.hanxun.blog.mapper.InviteCodeMapper;
 import com.hanxun.blog.mapper.MottoMapper;
 import com.hanxun.blog.service.ManagerService;
@@ -26,6 +29,8 @@ public class ManagerServiceImpl implements ManagerService {
     private MottoMapper mottoMapper;
     @Autowired
     private InviteCodeMapper inviteCodeMapper;
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Override
     public String generateInviteCode() {
@@ -40,9 +45,26 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Boolean addMotto(String content) {
-        // todo 完善逻辑
         MottoDO mottoDO = new MottoDO();
         mottoDO.setContent(content);
         return mottoMapper.insert(mottoDO) > 0;
+    }
+
+    @Override
+    public Boolean addArticle(AddArticleReq addArticleReq) {
+        ArticleDO articleDO = this.buildArticleDO(addArticleReq);
+        //todo 标题重复比对
+        int count = articleMapper.insert(articleDO);
+        return count == 1;
+    }
+
+    private ArticleDO buildArticleDO(AddArticleReq addArticleReq) {
+        ArticleDO articleDO = new ArticleDO();
+        articleDO.setArticleTitle(addArticleReq.getTitle());
+        articleDO.setContent(addArticleReq.getContent());
+        articleDO.setIndexImage(addArticleReq.getIndexImage());
+        articleDO.setIntro(addArticleReq.getIntro());
+        articleDO.setLabel(addArticleReq.getLabel());
+        return articleDO;
     }
 }

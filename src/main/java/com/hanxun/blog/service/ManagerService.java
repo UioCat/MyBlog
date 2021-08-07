@@ -1,5 +1,7 @@
 package com.hanxun.blog.service;
 
+import com.hanxun.blog.controller.req.AddArticleReq;
+
 import java.util.List;
 
 /**
@@ -21,4 +23,11 @@ public interface ManagerService {
      * @return
      */
     Boolean addMotto(String content);
+
+    /**
+     * 新增文章
+     * @param addArticleReq
+     * @return
+     */
+    Boolean addArticle(AddArticleReq addArticleReq);
 }

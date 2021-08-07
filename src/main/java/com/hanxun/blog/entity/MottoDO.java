@@ -1,6 +1,8 @@
 package com.hanxun.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.hanxun.blog.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @TableName("motto")
 public class MottoDO extends BaseDO {
+
 
     /**
     * 内容

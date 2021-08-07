@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -141,6 +142,7 @@ public class LoginServiceImpl implements LoginService {
         userToken.setExpiresAt(expiresAt);
         userToken.setUserAgent(userAgent);
         userToken.setIp(ip);
+        userToken.setAdmin(false);
 
         //序列化Token对象到Redis
         this.redisTemplate.opsForValue().set("token:"+ touristInfo.getId(), userToken, expiresSeconds, TimeUnit.SECONDS);
@@ -148,5 +150,4 @@ public class LoginServiceImpl implements LoginService {
         //生成token信息
         return JWTUtil.getToken(touristInfo, userToken, jwtKey, issuedAt);
     }
-
 }

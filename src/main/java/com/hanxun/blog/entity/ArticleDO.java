@@ -24,14 +24,19 @@ public class ArticleDO extends BaseDO {
     private String articleTitle;
 
     /**
+    * 标签
+    */
+    private String label;
+
+    /**
+    * 简介
+    */
+    private String intro;
+
+    /**
     * 内容
     */
     private String content;
-
-    /**
-    * 作者id
-    */
-    private Long authorId;
 
     /**
     * 点赞数
@@ -42,5 +47,10 @@ public class ArticleDO extends BaseDO {
     * 浏览数
     */
     private Long browseTimes;
+
+    /**
+    * 首图
+    */
+    private String indexImage;
 
 }

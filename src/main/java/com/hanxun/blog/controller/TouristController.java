@@ -71,15 +71,6 @@ public class TouristController extends BaseController {
         return BackMessage.success(info);
     }
 
-    /**
-     * 评论
-     * @return
-     */
-    @PostMapping("/comment")
-    public BackMessage comment() {
-        return null;
-    }
-
     @GetMapping("/loginSuccess")
     public BackMessage loginSuccess() {
         return BackMessage.success("你已经登陆");
