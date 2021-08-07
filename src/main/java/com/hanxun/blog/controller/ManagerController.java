@@ -1,6 +1,7 @@
 package com.hanxun.blog.controller;
 
 import com.hanxun.blog.config.AdminConfig;
+import com.hanxun.blog.controller.req.SetMottoReq;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.ManagerService;
@@ -51,13 +52,13 @@ public class ManagerController extends BaseController {
      * @return
      */
     @PostMapping("/setMotto")
-    public BackMessage setMotto(@RequestBody String content) {
+    public BackMessage setMotto(@RequestBody SetMottoReq mottoReq) {
         Long userId = super.getUserId();
         // todo 管理员鉴权
-        if (StringUtils.isEmpty(content)) {
+        if (StringUtils.isEmpty(mottoReq.getContent())) {
             throw new CustomException(BackEnum.PARAM_ERROR);
         }
-        managerService.addMotto(content);
+        managerService.addMotto(mottoReq.getContent());
         return BackMessage.success();
     }
 

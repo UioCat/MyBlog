@@ -1,5 +1,6 @@
 package com.hanxun.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.hanxun.blog.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,10 +12,9 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName("motto")
 public class MottoDO extends BaseDO {
 
-
-    private static final long serialVersionUID = -740862685749543857L;
     /**
     * 内容
     */

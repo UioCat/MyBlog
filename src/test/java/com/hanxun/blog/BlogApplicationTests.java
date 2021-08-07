@@ -26,9 +26,4 @@ class BlogApplicationTests {
         GeneratorConfig.genDal(tableArray, packageName, superClass, author, url, username, password);
     }
 
-    @Test
-    public void uuidTest() {
-        String code = UUID.randomUUID().toString();
-        System.out.println(code);
-    }
 }

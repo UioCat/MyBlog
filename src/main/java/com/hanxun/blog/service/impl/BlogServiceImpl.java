@@ -49,6 +49,7 @@ public class BlogServiceImpl implements BlogService {
             indexDTO.setTitle(title);
             redisTemplate.opsForValue().set(BlogConstant.INDEX_KEY, JSON.toJSONString(indexDTO), BlogConstant.INDEX_CACHE_TIME);
         } else {
+            log.info("get index data by cache");
             indexDTO = JSON.parseObject(indexMessage, IndexDTO.class);
         }
         log.info("return indexDTO:{}", JSON.toJSONString(indexDTO));

@@ -1,5 +1,6 @@
 package com.hanxun.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.hanxun.blog.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,10 +12,10 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName("invite_code")
 public class InviteCodeDO extends BaseDO {
 
 
-    private static final long serialVersionUID = -8556720417988287529L;
     /**
     * 邀请码
     */

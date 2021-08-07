@@ -10,6 +10,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hanxun.blog.entity.base.UserToken;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.utils.ThreadLocalUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class JWTInterceptor implements HandlerInterceptor {
 
-    private final static Logger log= LoggerFactory.getLogger(JWTInterceptor.class);
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -36,7 +37,9 @@ public class JWTInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
         if(StringUtils.isEmpty(token)){
-            throw new CustomException("token不能为空");
+//            throw new CustomException("token不能为空");
+            log.warn("用户为游客用户");
+            return true;
         }
         try {
             DecodedJWT decodedJWT = null;

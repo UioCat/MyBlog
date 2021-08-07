@@ -26,6 +26,9 @@ public class UserToken implements Serializable {
     // 客户端
     private String userAgent;
 
+    // 管理员
+    private Boolean admin;
+
     // 授权时间
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)

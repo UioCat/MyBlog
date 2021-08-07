@@ -10,12 +10,12 @@ V1	2021-07-13	 初始化用户界面接口文档
 
 [toc]
 
-## 首页
+## 首页√
 
 URL/GET
 
 ```
-
+/getIndex
 ```
 
 发送数据
@@ -28,12 +28,12 @@ URL/GET
 
 ```json
 {
-  "code":"200",
-  "message":"请求成功",
-  "info":{
-  	"title":"",
-	  "motto":"",
-  }
+    "code": 200,
+    "message": "请求成功",
+    "info": {
+        "title": "xiao lou 的博客",
+        "motto": "1111"
+    }
 }
 ```
 
@@ -428,19 +428,19 @@ null
 }
 ```
 
-## 设置Motto
+## 设置Motto√
 
 URL/POST
 
 ```
-1
+/admin/setMotto
 ```
 
 发送数据
 
 ```json
 {
-	"motto":""
+    "content":"Think big, Go deep"
 }
 ```
 
@@ -448,9 +448,9 @@ URL/POST
 
 ```json
 {
-  "code":"200",
-  "message":"请求成功",
-  "info":
+    "code": 200,
+    "message": "请求成功",
+    "info": null
 }
 ```
 

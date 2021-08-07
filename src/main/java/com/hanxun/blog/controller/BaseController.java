@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BaseController {
 
-    @GetMapping("/index")
-    public String index() {
-        return "success";
-    }
+//    @GetMapping("/index")
+//    public String index() {
+//        return "success";
+//    }
 
     public Long getUserId() {
         UserToken currentUser = ThreadLocalUtil.getCurrentUser();

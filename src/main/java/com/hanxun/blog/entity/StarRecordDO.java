@@ -1,5 +1,8 @@
 package com.hanxun.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.hanxun.blog.entity.base.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,10 +14,10 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName("star_record")
 public class StarRecordDO extends BaseDO {
 
 
-    private static final long serialVersionUID = 8385326576664307064L;
     /**
     * 文章id
     */
