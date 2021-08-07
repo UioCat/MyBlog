@@ -68,7 +68,7 @@ public class EmailServiceImpl implements EmailService {
         //进入发送逻辑的时候生成随机验证码，六位数字
         String sale = SendUtil.getRandomCode(6);
 
-        Pattern p = Pattern.compile(BlogConstant.regex);
+        Pattern p = Pattern.compile(BlogConstant.REGEX);
         Matcher m = p.matcher(email);
         boolean isMatch = m.matches();
         if (!isMatch) {
@@ -79,19 +79,19 @@ public class EmailServiceImpl implements EmailService {
             if (redisTemplate.hasKey(email)) {
                 //判断发送间隔是否小于一分钟
                 String oldTime = redisTemplate.opsForValue().get(email).substring(6);
-                if ((System.currentTimeMillis() / 1000 - Long.parseLong(oldTime)) < BlogConstant.mailIntervalTime) {
+                if ((System.currentTimeMillis() / 1000 - Long.parseLong(oldTime)) < BlogConstant.MAIL_INTERVAL_TIME) {
                     throw new CustomException("间隔时间小于一分钟");
                 }
                 //刷新key
-                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) ,  BlogConstant.mailValidTime, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) ,  BlogConstant.MAIL_VALID_TIME, TimeUnit.SECONDS);
             } else {
                 //新建key
-                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , BlogConstant.mailValidTime , TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , BlogConstant.MAIL_VALID_TIME, TimeUnit.SECONDS);
             }
 
             //发送验证码
             ToEmail toEmail = new ToEmail();
-            toEmail.setSubject(BlogConstant.mailSubject);
+            toEmail.setSubject(BlogConstant.MAIL_SUBJECT);
 
             // todo mail content use velocity template
             toEmail.setContent("您的验证码是: " + sale);

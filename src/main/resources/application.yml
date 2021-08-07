@@ -6,5 +6,6 @@ spring:
   profiles:
     active: dev
 admin:
-  key: keykeykey
-  email: 406453373@qq.com
+  key: keykeykey # token密钥
+  email: 406453373@qq.com # 管理员email-用于验证码登陆
+  title: xiao lou 的博客

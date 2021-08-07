@@ -67,7 +67,7 @@ public class TouristController extends BaseController {
         if (!emailService.sendCode(email)) {
             throw new CustomException(BackEnum.SEND_CODE_FAIL);
         }
-        String info = "有效时间" + BlogConstant.mailValidTime / 60 + "分钟";
+        String info = "有效时间" + BlogConstant.MAIL_VALID_TIME / 60 + "分钟";
         return BackMessage.success(info);
     }
 
@@ -79,16 +79,6 @@ public class TouristController extends BaseController {
     public BackMessage comment() {
         return null;
     }
-
-    /**
-     * 游客点赞接口
-     * @return
-     */
-    @PostMapping("/star")
-    public BackMessage star() {
-        return null;
-    }
-
 
     @GetMapping("/loginSuccess")
     public BackMessage loginSuccess() {

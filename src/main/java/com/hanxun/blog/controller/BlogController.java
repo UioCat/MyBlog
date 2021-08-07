@@ -1,7 +1,10 @@
 package com.hanxun.blog.controller;
 
 import com.hanxun.blog.controller.req.StarReq;
+import com.hanxun.blog.dto.IndexDTO;
+import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.service.ArticleService;
+import com.hanxun.blog.service.BlogService;
 import com.hanxun.blog.utils.BackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,8 @@ public class BlogController extends BaseController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private BlogService blogService;
 
     /**
      * 获取首页接口
@@ -26,7 +31,8 @@ public class BlogController extends BaseController {
      */
     @GetMapping("/getIndex")
     public BackMessage getIndex() {
-        return null;
+        IndexDTO indexMessage = blogService.getIndexMessage();
+        return new BackMessage<IndexDTO>(BackEnum.REQUEST_SUCCESS, indexMessage);
     }
 
     @GetMapping("/getArticleList")
