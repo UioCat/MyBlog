@@ -23,9 +23,10 @@ public interface EmailService {
     /**
      * 发送验证码
      * @param email
+     * @param type 1:登录 2:注册
      * @return
      */
-    Boolean sendCode(String email);
+    Boolean sendCode(String email, Integer type);
 
 
 }

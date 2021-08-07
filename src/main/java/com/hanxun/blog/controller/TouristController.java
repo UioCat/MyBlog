@@ -3,6 +3,7 @@ package com.hanxun.blog.controller;
 import com.hanxun.blog.config.BlogConstant;
 import com.hanxun.blog.controller.req.TouristLoginReq;
 import com.hanxun.blog.controller.req.TouristRegisterReq;
+import com.hanxun.blog.dto.LoginInfoVO;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.service.EmailService;
@@ -41,8 +42,23 @@ public class TouristController extends BaseController {
         String ip = request.getRemoteAddr();
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
         log.info("user login ip:{}, UA:{}, email:{}", ip, userAgent, touristLoginReq.getEmail());
-        String token = loginService.login(touristLoginReq, ip, userAgent);
-        return BackMessage.success(token);
+        LoginInfoVO token = loginService.login(touristLoginReq, ip, userAgent);
+        return new BackMessage(BackEnum.REQUEST_SUCCESS,token);
+
+    }
+
+    /**
+     * 游客邮箱验证码登录
+     * @return
+     */
+    @PostMapping("/loginByEmail")
+    public BackMessage loginByEmail(HttpServletRequest request, HttpServletResponse response, @RequestBody TouristLoginReq touristLoginReq) {
+        //登录信息
+        String ip = request.getRemoteAddr();
+        String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+        log.info("user login ip:{}, UA:{}, email:{}", ip, userAgent, touristLoginReq.getEmail());
+        LoginInfoVO token = loginService.loginByEmail(touristLoginReq, ip, userAgent);
+        return new BackMessage(BackEnum.REQUEST_SUCCESS,token);
 
     }
 
@@ -60,11 +76,13 @@ public class TouristController extends BaseController {
 
     /**
      * 发送注册验证码
+     * @param email
+     * @param type 1:登录 2:注册
      * @return
      */
     @GetMapping("/sendCode")
-    public BackMessage sendCode(@RequestParam("email") String email) {
-        if (!emailService.sendCode(email)) {
+    public BackMessage sendCode(@RequestParam("email") String email,@RequestParam("type") Integer type) {
+        if (!emailService.sendCode(email, type)) {
             throw new CustomException(BackEnum.SEND_CODE_FAIL);
         }
         String info = "有效时间" + BlogConstant.MAIL_VALID_TIME / 60 + "分钟";

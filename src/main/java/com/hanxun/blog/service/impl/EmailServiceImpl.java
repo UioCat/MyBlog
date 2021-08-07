@@ -61,10 +61,11 @@ public class EmailServiceImpl implements EmailService {
     /**
      * 发送验证码
      * @param email
+     * @param type 1:登录 2:注册
      * @return
      */
     @Override
-    public Boolean sendCode(String email) {
+    public Boolean sendCode(String email,Integer type) {
         //进入发送逻辑的时候生成随机验证码，六位数字
         String sale = SendUtil.getRandomCode(6);
 
@@ -75,18 +76,24 @@ public class EmailServiceImpl implements EmailService {
             throw new CustomException("邮箱格式不正确,请核对后重新输入!");
         } else {
 
+            String emailKey = email;
+            //判断验证码类型,注册key为mail,登录key为L+email
+            if (type.equals(1)) {
+                emailKey = "L" + emailKey;
+            }
+
             //判断key是否存在
-            if (redisTemplate.hasKey(email)) {
+            if (redisTemplate.hasKey(emailKey)) {
                 //判断发送间隔是否小于一分钟
-                String oldTime = redisTemplate.opsForValue().get(email).substring(6);
+                String oldTime = redisTemplate.opsForValue().get(emailKey).substring(6);
                 if ((System.currentTimeMillis() / 1000 - Long.parseLong(oldTime)) < BlogConstant.MAIL_INTERVAL_TIME) {
                     throw new CustomException("间隔时间小于一分钟");
                 }
                 //刷新key
-                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) ,  BlogConstant.MAIL_VALID_TIME, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(emailKey, sale + (System.currentTimeMillis() / 1000 ) ,  BlogConstant.MAIL_VALID_TIME, TimeUnit.SECONDS);
             } else {
                 //新建key
-                redisTemplate.opsForValue().set(email, sale + (System.currentTimeMillis() / 1000 ) , BlogConstant.MAIL_VALID_TIME, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(emailKey, sale + (System.currentTimeMillis() / 1000 ) , BlogConstant.MAIL_VALID_TIME, TimeUnit.SECONDS);
             }
 
             //发送验证码

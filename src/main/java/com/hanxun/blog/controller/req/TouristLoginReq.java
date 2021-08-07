@@ -24,4 +24,9 @@ public class TouristLoginReq {
      */
     private String password;
 
+    /**
+     * 验证码
+     */
+    private String code;
+
 }
