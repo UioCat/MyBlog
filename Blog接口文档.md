@@ -42,6 +42,7 @@ URL/GET
 URL/GET
 
 ```
+
 ```
 
 发送数据(分页查询)
@@ -84,6 +85,7 @@ URL/GET
 URL/GET
 
 ```
+
 ```
 
 发送数据
@@ -126,6 +128,7 @@ URL/GET
 URL/GET
 
 ```
+
 ```
 
 发送数据
@@ -305,13 +308,15 @@ URL/POST
 URL/GET
 
 ```
-
+/myBlog/starSwitch
 ```
 
 发送数据
 
 ```
-
+{
+    "articleId":1
+}
 ```
 
 返回数据
@@ -487,11 +492,13 @@ URL/GET
 URL/GET
 
 ```
+
 ```
 
 发送数据
 
 ```
+
 ```
 
 返回数据
@@ -507,11 +514,13 @@ URL/GET
 URL/GET
 
 ```
+
 ```
 
 发送数据
 
 ```
+
 ```
 
 返回数据
