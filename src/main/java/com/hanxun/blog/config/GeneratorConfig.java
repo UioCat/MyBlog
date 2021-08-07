@@ -90,8 +90,6 @@ public class GeneratorConfig {
         templateConfig.setController(null);
         templateConfig.setService(null);
         templateConfig.setServiceImpl(null);
-//        templateConfig.setService("generatorCode/batchmapper.java");
-//        templateConfig.setServiceImpl("generatorCode/batchmapperImpl.java");
 
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
@@ -102,7 +100,7 @@ public class GeneratorConfig {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setSuperEntityClass(superClass);
         strategy.setLogicDeleteFieldName("isDelete");
-        strategy.setSuperEntityColumns("id", "delete", "gmtCreate", "gmtModified");
+        strategy.setSuperEntityColumns("id", "is_delete", "gmt_create", "gmt_modified", "isDelete", "gmtCreate", "gmtModified");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         // 公共父类

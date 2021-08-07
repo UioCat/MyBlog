@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  *  Mapper接口
  * @author han xun
- * @date 2021-08-03
+ * @date 2021-08-07
  */
 @Mapper
 public interface InviteCodeMapper extends BaseMapper<InviteCodeDO> {

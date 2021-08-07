@@ -19,7 +19,7 @@ class BlogApplicationTests {
 
     @Test
     public void codeGenerator(){
-        String[] tableArray = {"article", "comment", "motto", "tourist", "invite_code"};
+        String[] tableArray = {"article", "comment", "motto", "tourist", "invite_code", "star_record"};
         String packageName = "com.hanxun.blog";
         String superClass = "com.hanxun.blog.entity.base.BaseDO";
         String author = "han xun";

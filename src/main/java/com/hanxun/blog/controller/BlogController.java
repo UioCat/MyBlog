@@ -1,9 +1,12 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.controller.req.StarReq;
 import com.hanxun.blog.service.ArticleService;
 import com.hanxun.blog.utils.BackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Description: 展示博客控制器
  */
 @RestController
-public class BlogController {
+public class BlogController extends BaseController {
 
     @Autowired
     private ArticleService articleService;
@@ -36,9 +39,15 @@ public class BlogController {
         return null;
     }
 
-//    @PostMapping("/addArticle")
-//    public BackMessage addArticle(@RequestBody ArticleEntity article){
-//        articleService.add(article);
-//        return BackMessage.success();
-//    }
+    /**
+     * 点赞/取消点赞切换
+     * @param starReq
+     * @return
+     */
+    @PostMapping("/starSwitch")
+    public BackMessage starSwitch(@RequestBody StarReq starReq) {
+        Long userId = super.getUserId();
+        articleService.starSwitch(userId, starReq.getArticleId());
+        return BackMessage.success();
+    }
 }

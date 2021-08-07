@@ -13,9 +13,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@PropertySource(value = {"classpath:admin-config.yml"})
 public class AdminConfig {
 
-    @Value("admin.id")
-    private Long id;
+    @Value("${admin.key}")
+    private String key;
+    @Value("${admin.email}")
+    private String email;
+
 }

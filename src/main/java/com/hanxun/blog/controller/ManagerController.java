@@ -7,10 +7,8 @@ import com.hanxun.blog.service.ManagerService;
 import com.hanxun.blog.utils.BackMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 /**
@@ -43,10 +41,7 @@ public class ManagerController extends BaseController {
     @GetMapping("/getInviteCode")
     public BackMessage getInviteCode() {
         Long userId = super.getUserId();
-        if (!userId.equals(adminConfig.getId())){
-            throw new CustomException(BackEnum.INSUFFICIENT_PERMISSIONS);
-        }
-        // todo 鉴权
+        // todo 管理员鉴权
         String inviteCode = managerService.generateInviteCode();
         return new BackMessage<String>(BackEnum.REQUEST_SUCCESS, inviteCode);
     }
@@ -58,10 +53,7 @@ public class ManagerController extends BaseController {
     @PostMapping("/setMotto")
     public BackMessage setMotto(@RequestBody String content) {
         Long userId = super.getUserId();
-        if (!userId.equals(adminConfig.getId())){
-            throw new CustomException(BackEnum.INSUFFICIENT_PERMISSIONS);
-        }
-        // todo 鉴权
+        // todo 管理员鉴权
         if (StringUtils.isEmpty(content)) {
             throw new CustomException(BackEnum.PARAM_ERROR);
         }

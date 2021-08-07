@@ -1,5 +1,8 @@
 package com.hanxun.blog.controller;
 
+import com.hanxun.blog.entity.base.UserToken;
+import com.hanxun.blog.enums.BackEnum;
+import com.hanxun.blog.exception.CustomException;
 import com.hanxun.blog.utils.ThreadLocalUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,10 @@ public class BaseController {
     }
 
     public Long getUserId() {
-        return ThreadLocalUtil.getCurrentUser().getUserId();
+        UserToken currentUser = ThreadLocalUtil.getCurrentUser();
+        if (null == currentUser || null == currentUser.getUserId()) {
+            throw new CustomException(BackEnum.UNAUTHORIZED);
+        }
+        return currentUser.getUserId();
     }
 }

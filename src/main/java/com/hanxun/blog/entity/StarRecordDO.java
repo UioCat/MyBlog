@@ -11,23 +11,23 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CommentDO extends BaseDO {
+public class StarRecordDO extends BaseDO {
 
 
-    private static final long serialVersionUID = 9082348323788767835L;
+    private static final long serialVersionUID = 8385326576664307064L;
     /**
-    * 博客id
+    * 文章id
     */
-    private Long blogId;
-
-    /**
-    * 评论者邮箱
-    */
-    private String email;
+    private Long articleId;
 
     /**
-    * 评论内容
+    * 用户id
     */
-    private String content;
+    private Long userId;
+
+    /**
+    * 是否点赞
+    */
+    private Boolean star;
 
 }
