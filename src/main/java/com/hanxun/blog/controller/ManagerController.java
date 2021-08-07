@@ -3,8 +3,10 @@ package com.hanxun.blog.controller;
 import com.hanxun.blog.config.AdminConfig;
 import com.hanxun.blog.controller.req.AddArticleReq;
 import com.hanxun.blog.controller.req.SetMottoReq;
+import com.hanxun.blog.dto.MottoQuery;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.exception.CustomException;
+import com.hanxun.blog.page.PageResult;
 import com.hanxun.blog.service.ManagerService;
 import com.hanxun.blog.utils.BackMessage;
 import org.apache.commons.lang3.StringUtils;
@@ -68,15 +70,21 @@ public class ManagerController extends BaseController {
      * 查看motto列表接口
      * @return
      */
-    public BackMessage getMottoList() {
-        return null;
+    @PostMapping("/getMottoList")
+    public BackMessage getMottoList(@RequestBody MottoQuery mottoQuery) {
+        PageResult pageResult = managerService.selectMotto(mottoQuery);
+        return new BackMessage(BackEnum.REQUEST_SUCCESS, pageResult);
     }
 
     /**
      * 删除motto接口
      * @return
      */
-    public BackMessage deleteMotto() {
-        return null;
+    @GetMapping("/deleteMotto")
+    public BackMessage deleteMotto(@RequestParam("id") Long id) {
+        if (managerService.deleteMotto(id)) {
+            return BackMessage.success();
+        }
+        return BackMessage.error();
     }
 }

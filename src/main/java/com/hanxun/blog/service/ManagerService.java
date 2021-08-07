@@ -1,6 +1,8 @@
 package com.hanxun.blog.service;
 
 import com.hanxun.blog.controller.req.AddArticleReq;
+import com.hanxun.blog.dto.MottoQuery;
+import com.hanxun.blog.page.PageResult;
 
 import java.util.List;
 
@@ -30,4 +32,17 @@ public interface ManagerService {
      * @return
      */
     Boolean addArticle(AddArticleReq addArticleReq);
+
+    /**
+     * 删除一个motto
+     * @return
+     */
+    Boolean deleteMotto(Long id);
+
+    /**
+     * 分页查询motto
+     * @param mottoQuery
+     * @return
+     */
+    PageResult selectMotto(MottoQuery mottoQuery);
 }
