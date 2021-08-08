@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class PageRequestParam implements Serializable {
 
     private static final long serialVersionUID = -1143009027448789158L;
+
     /** 当前记录起始索引 */
     private Integer pageNum = 0;
 

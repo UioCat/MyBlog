@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
  * Description: 游客控制页
  */
 @RestController
-@RequestMapping("tourist")
+@RequestMapping("permission")
 @Slf4j
-public class TouristController extends BaseController {
+public class LoginController extends BaseController {
 
     @Autowired
     private EmailService emailService;
@@ -37,22 +37,21 @@ public class TouristController extends BaseController {
      * @return
      */
     @PostMapping("/login")
-    public BackMessage login(HttpServletRequest request, HttpServletResponse response, @RequestBody TouristLoginReq touristLoginReq) {
+    public BackMessage login(HttpServletRequest request, @RequestBody TouristLoginReq touristLoginReq) {
         //登录信息
         String ip = request.getRemoteAddr();
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
         log.info("user login ip:{}, UA:{}, email:{}", ip, userAgent, touristLoginReq.getEmail());
         LoginInfoVO token = loginService.login(touristLoginReq, ip, userAgent);
         return new BackMessage(BackEnum.REQUEST_SUCCESS,token);
-
     }
 
     /**
-     * 游客邮箱验证码登录
+     * 邮箱验证码登录
      * @return
      */
     @PostMapping("/loginByEmail")
-    public BackMessage loginByEmail(HttpServletRequest request, HttpServletResponse response, @RequestBody TouristLoginReq touristLoginReq) {
+    public BackMessage loginByEmail(HttpServletRequest request, @RequestBody TouristLoginReq touristLoginReq) {
         //登录信息
         String ip = request.getRemoteAddr();
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
@@ -81,7 +80,7 @@ public class TouristController extends BaseController {
      * @return
      */
     @GetMapping("/sendCode")
-    public BackMessage sendCode(@RequestParam("email") String email,@RequestParam("type") Integer type) {
+    public BackMessage sendCode(@RequestParam("email") String email, @RequestParam("type") Integer type) {
         if (!emailService.sendCode(email, type)) {
             throw new CustomException(BackEnum.SEND_CODE_FAIL);
         }

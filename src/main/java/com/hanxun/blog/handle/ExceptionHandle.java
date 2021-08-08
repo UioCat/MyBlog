@@ -24,7 +24,6 @@ public class ExceptionHandle {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-
     public BackMessage handle(Exception e) {
 
         if(e instanceof CustomException) {

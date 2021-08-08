@@ -78,11 +78,8 @@ public class LoginServiceImpl implements LoginService {
         if (null != touristDO) {
             throw new CustomException(BackEnum.ACCOUNT_USED);
         }
-
         //判断验证码是否正确
         verifyCode(touristRegisterReq.getEmail(), touristRegisterReq.getVerifyCode());
-
-
         UpdateWrapper<InviteCodeDO> codeDOQueryWrapper = new UpdateWrapper<>();
         codeDOQueryWrapper.eq("code", touristRegisterReq.getInviteCode())
                 .set("is_delete", BlogConstant.DELETE).set("gmt_modified", new Date());
@@ -127,13 +124,10 @@ public class LoginServiceImpl implements LoginService {
 
         //登录时间
         LocalDateTime issuedAt = LocalDateTime.now();
-
         //过期时间,半小时
         LocalDateTime expiresAt = issuedAt.plusSeconds(TimeUnit.MINUTES.toSeconds(30));
-
         // 距离过期时间剩余的秒数
         int expiresSeconds = (int) Duration.between(issuedAt, expiresAt).getSeconds();
-
         // 存储Session
         UserToken userToken = new UserToken();
         // 随机生成uuid，作为token的id
@@ -154,7 +148,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     /**
-     * 游客邮箱登录
+     * 邮箱登录 访客/admin
      * @param loginReq
      * @param ip
      * @param userAgent
@@ -170,13 +164,10 @@ public class LoginServiceImpl implements LoginService {
 
         //登录时间
         LocalDateTime issuedAt = LocalDateTime.now();
-
         //过期时间,半小时
         LocalDateTime expiresAt = issuedAt.plusSeconds(TimeUnit.MINUTES.toSeconds(30));
-
         // 距离过期时间剩余的秒数
         int expiresSeconds = (int) Duration.between(issuedAt, expiresAt).getSeconds();
-
         // 存储Session
         UserToken userToken = new UserToken();
 
@@ -184,19 +175,14 @@ public class LoginServiceImpl implements LoginService {
 
         //管理员登录
         if (StringUtils.equals(loginReq.getEmail(), adminEmail)) {
-            // 随机生成uuid，作为token的id
-            userToken.setId(UUID.randomUUID().toString().replace("-", ""));
+            // 设置token缓存数据
             userToken.setUserId(Long.valueOf(adminKey));
-            userToken.setIssuedAt(issuedAt);
-            userToken.setExpiresAt(expiresAt);
-            userToken.setUserAgent(userAgent);
-            userToken.setIp(ip);
-            userToken.setAdmin(false);
-            loginInfoVO.setIsAdmin(true);
-        }
-        //普通用户登录
-        else {
+            userToken.setAdmin(true);
 
+            // 设置返回数据
+            loginInfoVO.setIsAdmin(true);
+            touristInfo.setId(Long.valueOf(adminKey));
+        } else {
             QueryWrapper<TouristDO> objectQueryWrapper = new QueryWrapper<>();
             objectQueryWrapper.eq("account", loginReq.getEmail());
             touristInfo = touristMapper.selectOne(objectQueryWrapper);
@@ -204,17 +190,16 @@ public class LoginServiceImpl implements LoginService {
             if (null == touristInfo) {
                 throw new CustomException(BackEnum.NO_USER);
             }
-
-            // 随机生成uuid，作为token的id
-            userToken.setId(UUID.randomUUID().toString().replace("-", ""));
-            userToken.setUserId(touristInfo.getId());
-            userToken.setIssuedAt(issuedAt);
-            userToken.setExpiresAt(expiresAt);
-            userToken.setUserAgent(userAgent);
-            userToken.setIp(ip);
             userToken.setAdmin(false);
+            loginInfoVO.setIsAdmin(false);
         }
 
+        // 随机生成uuid，作为token的id
+        userToken.setId(UUID.randomUUID().toString().replace("-", ""));
+        userToken.setIssuedAt(issuedAt);
+        userToken.setExpiresAt(expiresAt);
+        userToken.setUserAgent(userAgent);
+        userToken.setIp(ip);
 
         //序列化Token对象到Redis
         this.redisTemplate.opsForValue().set("token:"+ touristInfo.getId(), userToken, expiresSeconds, TimeUnit.SECONDS);
@@ -230,7 +215,7 @@ public class LoginServiceImpl implements LoginService {
      * @param code
      * @return
      */
-    public boolean verifyCode(String key,String code){
+    public boolean verifyCode(String key, String code){
         String redisCode = stringRedisTemplate.opsForValue().get(key);
         if (StringUtils.isBlank(redisCode)) {
             throw new CustomException(BackEnum.THE_VERIFICATION_CODE_DOES_NOT_EXIST_OR_HAS_EXPIRED);

@@ -21,6 +21,7 @@ public class RedisConfig {
     //配置序列化器
     @Bean
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory factory){
+
         // 1.创建 redisTemplate 模版
         RedisTemplate<String,Object> template=new RedisTemplate<>();
         // 2.关联 redisConnectionFactory

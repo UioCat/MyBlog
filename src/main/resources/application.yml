@@ -6,7 +6,7 @@ spring:
   profiles:
     active: dev
 admin:
-  key: 406453373 # token密钥--作为admin的userId
+  key: 406453373 # Long--作为admin的userId
   email: 406453373@qq.com # 管理员email-用于验证码登陆
   title: 寒浔的博客
   author: 寒浔

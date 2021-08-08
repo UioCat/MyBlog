@@ -80,7 +80,7 @@ URL/GET
 >
 > homePage可能为null，若为null则加载默认图片（由前端缓存）
 
-## 获得指定文章详细内容
+## 获得指定文章详细内容√
 
 URL/GET
 
@@ -213,16 +213,20 @@ URL/GET
 URL/GET
 
 ```
-/tourist/sendCode
+/permisssion/sendCode
 ```
 
 发送数据
 
 ```
-?email=406453373@qq.com
+?email=406453373@qq.com&type=1
 ```
 
 携带在URL中
+
+> type=1表示登陆时获取验证码
+>
+> type=2表示注册时获取验证码
 
 返回数据
 
@@ -241,7 +245,7 @@ URL/GET
 URL/POST
 
 ```
-/tourist/register
+/permission/register
 ```
 
 发送数据
@@ -274,12 +278,14 @@ URL/POST
 }
 ```
 
-## 访客登陆√
+## 密码登陆√
+
+> 该接口仅为用户使用
 
 URL/POST
 
 ```
-/tourist/login
+/permission/login
 ```
 
 发送数据
@@ -297,13 +303,50 @@ URL/POST
 {
     "code": 200,
     "message": "请求成功",
-    "info": "eyJhbGciOiJIUzI1NiIsIkpXVCI6IkpXVCIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQyMjkwMjY2OTkxMTExNzgyNSwiaWF0IjoxNjI4MDgxNjM1LCJqdGkiOiI4OTA3NjU2MTdkMDA0Y2Y0YWVjOTE0NWEyZDJjMTk4YiJ9.Lp-AwQPMHwBAnnfg6lKppnXDg7jSJ_DGVdapKrS2T-M"
+    "info": {
+        "token": "eyJhbGciOiJIUzI1NiIsIkpXVCI6IkpXVCIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQyMjkwMjY2OTkxMTExNzgyNSwiaWF0IjoxNjI4NDEyNTA5LCJqdGkiOiIwNTNlNGM2MDg3YjQ0MWI0YjMxYWEwOTg0ZjU1N2YxZiJ9.qGT0y_bUASLyfpDQ8nUI8OL80d7UrmTmIYTw1CJ2Z8s",
+        "isAdmin": false
+    }
 }
 ```
 
-> info内信息为token
+> info内信息为token，携带在http header上
 
-## 访客点赞
+## 邮箱登陆√
+
+该接口为用户和管理员复用
+
+URL/POST
+
+```
+/permission/loginByEmail
+```
+
+发送数据
+
+```json
+{
+	"email":"406453373@qq.com",
+  "code":"910478"
+}
+```
+
+返回数据
+
+```json
+{
+    "code": 200,
+    "message": "请求成功",
+    "info": {
+        "token": "eyJhbGciOiJIUzI1NiIsIkpXVCI6IkpXVCIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Mjg0MTI1OTgsImp0aSI6ImIwODg0NjU0MzUzOTQwNzE5YjRlZmVhMDJmOGNiYTg2In0.DJHtDc3jIS5kob6pyD_-M4c1nVsbUBaETpFoZdwnVhE",
+        "isAdmin": true
+    }
+}
+```
+
+## 
+
+## 访客点赞√
 
 URL/GET
 
@@ -357,21 +400,23 @@ URL/GET
 
 # 后台管理
 
-## Admin登陆
+## 上传博客√
 
-URL/GET
+URL/POST
 
 ```
-
+/admin/addArticle
 ```
 
 发送数据
 
 ```json
 {
-	"email":"",
-	"password":"",
-  "verificationCode":""
+	"title":"test-blog2",
+  "label":"Java",
+  "content":"test-content",
+  "intro":"intro-test",
+  "indexImage":"https://www.uiofield.top/blog-file/222222/index.png"
 }
 ```
 
@@ -381,31 +426,7 @@ URL/GET
 {
   "code":"200",
   "message":"请求成功",
-  "info":
-}
-```
-
-## 上传博客
-
-URL/GET
-
-```
-
-```
-
-发送数据
-
-```
-
-```
-
-返回数据
-
-```json
-{
-  "code":"200",
-  "message":"请求成功",
-  "info":
+  "info": null
 }
 ```
 
@@ -526,11 +547,7 @@ URL/GET
 返回数据
 
 ```json
-{
-  "code":"200",
-  "message":"请求成功",
-  "info":
-}
+{  "code":"200",  "message":"请求成功",  "info":}
 ```
 
 

@@ -65,7 +65,7 @@ public class EmailServiceImpl implements EmailService {
      * @return
      */
     @Override
-    public Boolean sendCode(String email,Integer type) {
+    public Boolean sendCode(String email, Integer type) {
         //进入发送逻辑的时候生成随机验证码，六位数字
         String sale = SendUtil.getRandomCode(6);
 
@@ -78,7 +78,7 @@ public class EmailServiceImpl implements EmailService {
 
             String emailKey = email;
             //判断验证码类型,注册key为mail,登录key为L+email
-            if (type.equals(1)) {
+            if (type.equals(BlogConstant.LOGIN_TYPE)) {
                 emailKey = "L" + emailKey;
             }
 

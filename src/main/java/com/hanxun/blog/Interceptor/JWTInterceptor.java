@@ -34,7 +34,7 @@ public class JWTInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
         if(StringUtils.isEmpty(token)){
-            log.warn("用户为游客用户");
+            log.warn("游客用户访问博客");
             return true;
         }
         try {
@@ -57,13 +57,11 @@ public class JWTInterceptor implements HandlerInterceptor {
             UserToken userToken = (UserToken) redisTemplate.opsForValue().get(tokenKey);
 
             if (userToken != null && userToken.getId().equals(decodedJWT.getId()) && userId.equals(userToken.getUserId())) {
-
                 /**
                  * 此时Token是合法的Token，需要进行续约操作
                  */
                 this.redisTemplate.expire(tokenKey, TimeUnit.MINUTES.toSeconds(30),
                         TimeUnit.SECONDS);
-
                 //TODO 把当前用户的身份信息，存储到当前请求的上下文，以便在Controller中获取 （例如存储到：ThreadLocal）
                 ThreadLocalUtil.addCurrentUser(userToken);
                 return true;

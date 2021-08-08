@@ -46,4 +46,11 @@ public interface BlogConstant {
      * 首页缓存时间
      */
     Integer INDEX_CACHE_TIME = 60 * 20;
+
+    /**
+     * 登陆
+     */
+    Integer LOGIN_TYPE = 1;
+
+
 }
