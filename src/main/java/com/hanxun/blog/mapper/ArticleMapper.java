@@ -13,7 +13,4 @@ import org.apache.ibatis.annotations.Update;
  */
 @Mapper
 public interface ArticleMapper extends BaseMapper<ArticleDO> {
-
-    @Update("UPDATE motto SET is_delete = true WHERE id = #{id}")
-    int deleteMottoById(@Param("id") Long id);
 }

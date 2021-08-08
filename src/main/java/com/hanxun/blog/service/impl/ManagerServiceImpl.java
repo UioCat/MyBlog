@@ -70,7 +70,9 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public Boolean deleteMotto(Long id) {
-        return articleMapper.deleteMottoById(id) > 0;
+        MottoDO mottoDO = new MottoDO();
+        mottoDO.setIsDelete(true);
+        return mottoMapper.updateById(mottoDO) > 0;
     }
 
     /**
