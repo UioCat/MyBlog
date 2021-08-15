@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hanxun.blog.mapper.ArticleMapper">
 
+    <select id="selectAllArticle" parameterType="com.hanxun.blog.dto.ArticleQuery" resultType="com.hanxun.blog.entity.ArticleDO">
+        select
+        id, is_delete, gmt_create, gmt_modified, article_title,label,intro
+        from article
+        where is_delete = false
+        <if test="articleTitle != null and articleTitle != ''">
+            and `article_title` like CONCAT('%', #{articleTitle,jdbcType=VARCHAR}, '%')
+        </if>
+        order by gmt_modified desc
+    </select>
+
 </mapper>

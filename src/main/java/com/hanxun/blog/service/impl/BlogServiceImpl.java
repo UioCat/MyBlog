@@ -4,14 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hanxun.blog.config.BlogConstant;
+import com.hanxun.blog.dto.ArticleQuery;
 import com.hanxun.blog.dto.IndexDTO;
+import com.hanxun.blog.entity.ArticleDO;
 import com.hanxun.blog.entity.MottoDO;
 import com.hanxun.blog.entity.StarRecordDO;
 import com.hanxun.blog.mapper.ArticleMapper;
 import com.hanxun.blog.mapper.MottoMapper;
 import com.hanxun.blog.mapper.StarRecordMapper;
 import com.hanxun.blog.page.PageResult;
+import com.hanxun.blog.page.PageUtils;
 import com.hanxun.blog.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
@@ -67,9 +71,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public PageResult getArticleList(int pageNum, int pageSize) {
-        // todo 分页查询完成
-        return null;
+    public PageResult getArticleList(ArticleQuery articleQuery) {
+        //开始分页查询
+        PageHelper.startPage(articleQuery.getPageNum(), articleQuery.getPageSize());
+        List<ArticleDO> articleDOS = articleMapper.selectAllArticle(articleQuery);
+        //封装分页信息
+        PageResult pageResult = PageUtils.getPageResult(articleQuery, new PageInfo<>(articleDOS));
+        return pageResult;
     }
 
     /**

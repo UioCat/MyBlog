@@ -1,5 +1,6 @@
 package com.hanxun.blog.service;
 
+import com.hanxun.blog.dto.ArticleQuery;
 import com.hanxun.blog.dto.IndexDTO;
 import com.hanxun.blog.page.PageResult;
 
@@ -18,11 +19,10 @@ public interface BlogService {
 
     /**
      * 获取文章列表
+     * @param articleQuery
      * @return
-     * @param pageNum
-     * @param pageSize
      */
-    PageResult getArticleList(int pageNum, int pageSize);
+    PageResult getArticleList(ArticleQuery articleQuery);
 
     /**
      * 点赞/取消点赞 切换

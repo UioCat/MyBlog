@@ -1,6 +1,7 @@
 package com.hanxun.blog.controller;
 
 import com.hanxun.blog.controller.req.StarReq;
+import com.hanxun.blog.dto.ArticleQuery;
 import com.hanxun.blog.dto.IndexDTO;
 import com.hanxun.blog.enums.BackEnum;
 import com.hanxun.blog.page.PageRequestParam;
@@ -38,20 +39,11 @@ public class BlogController extends BaseController {
      * 获取文章列表
      * @return
      */
-    @GetMapping("/getArticleList")
-    public BackMessage<PageResult> getArticleList(@RequestBody PageRequestParam pageRequestParam) {
+    @PostMapping("/getArticleList")
+    public BackMessage<PageResult> getArticleList(@RequestBody ArticleQuery articleQuery) {
 
-        int pageNum = 0;
-        int pageSize = 0;
-        if (null != pageRequestParam.getPageNum()) {
-            pageNum = pageRequestParam.getPageNum();
-        }
-        if (null != pageRequestParam.getPageSize()) {
-            pageSize = pageRequestParam.getPageSize();
-        }
-
-        PageResult articleList = blogService.getArticleList(pageNum, pageSize);
-        return null;
+        PageResult articleList = blogService.getArticleList(articleQuery);
+        return new BackMessage<>(BackEnum.REQUEST_SUCCESS, articleList);
     }
 
     /**
