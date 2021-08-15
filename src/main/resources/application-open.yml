@@ -40,10 +40,3 @@ mybatis-plus:
     map-underscore-to-camel-case: true
 jwt:
   key: key
-
-# pageHelper
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql

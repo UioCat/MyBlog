@@ -3,7 +3,8 @@ package com.hanxun.blog.controller;
 import com.hanxun.blog.controller.req.StarReq;
 import com.hanxun.blog.dto.IndexDTO;
 import com.hanxun.blog.enums.BackEnum;
-import com.hanxun.blog.service.ArticleService;
+import com.hanxun.blog.page.PageRequestParam;
+import com.hanxun.blog.page.PageResult;
 import com.hanxun.blog.service.BlogService;
 import com.hanxun.blog.utils.BackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class BlogController extends BaseController {
 
     @Autowired
-    private ArticleService articleService;
-    @Autowired
     private BlogService blogService;
 
     /**
@@ -35,11 +34,30 @@ public class BlogController extends BaseController {
         return new BackMessage<IndexDTO>(BackEnum.REQUEST_SUCCESS, indexMessage);
     }
 
+    /**
+     * 获取文章列表
+     * @return
+     */
     @GetMapping("/getArticleList")
-    public BackMessage getArticleList() {
+    public BackMessage<PageResult> getArticleList(@RequestBody PageRequestParam pageRequestParam) {
+
+        int pageNum = 0;
+        int pageSize = 0;
+        if (null != pageRequestParam.getPageNum()) {
+            pageNum = pageRequestParam.getPageNum();
+        }
+        if (null != pageRequestParam.getPageSize()) {
+            pageSize = pageRequestParam.getPageSize();
+        }
+
+        PageResult articleList = blogService.getArticleList(pageNum, pageSize);
         return null;
     }
 
+    /**
+     * 获取友联
+     * @return
+     */
     @GetMapping("/getLinks")
     public BackMessage getLinks() {
         return null;
@@ -53,7 +71,7 @@ public class BlogController extends BaseController {
     @PostMapping("/starSwitch")
     public BackMessage starSwitch(@RequestBody StarReq starReq) {
         Long userId = super.getUserId();
-        articleService.starSwitch(userId, starReq.getArticleId());
+        blogService.starSwitch(userId, starReq.getArticleId());
         return BackMessage.success();
     }
 

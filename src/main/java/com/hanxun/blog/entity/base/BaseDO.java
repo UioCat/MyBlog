@@ -41,22 +41,4 @@ public class BaseDO implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date gmtModified;
-
-    /**
-     * 总的记录条数
-     */
-    @TableField(exist = false)
-    private Long totalNum;
-
-    /**
-     * 页码
-     */
-    @TableField(exist = false)
-    private Long pageNum = 1L;
-
-    /**
-     * 每页显示长度
-     */
-    @TableField(exist = false)
-    private Long pageSize = 10L;
 }

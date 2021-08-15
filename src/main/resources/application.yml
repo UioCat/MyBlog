@@ -10,3 +10,9 @@ admin:
   email: 406453373@qq.com # 管理员email-用于验证码登陆
   title: 寒浔的博客
   author: 寒浔
+# pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
